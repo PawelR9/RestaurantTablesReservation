@@ -1,0 +1,102 @@
+/* restaurantRegistrationForm.css */
+
+/* Stylizacja formularza rejestracji */
+form {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+}
+
+.registration-header {
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+
+body {
+    margin-top: 150px;
+    margin-bottom: 150px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+}
+
+.checkbox-label input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+/* Pola podświetlają się na szaro po zaznaczeniu checkboxa */
+input[type="text"][disabled] {
+    background-color: #eee;
+}
+
+button[type="submit"] {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+/* Oddalenie footer od ramki */
+footer {
+    margin-top: 20px;
+}
+
+/* Stylizacja wyboru godzin otwarcia */
+.opening-hours {
+    display: flex;
+    flex-direction: column; /* Dni tygodnia jeden pod drugim */
+    align-items: baseline; /* Wyrównanie wg linii bazowej */
+}
+
+
+.opening-hours input[type="text"] {
+    width: 67px;
+    margin-right: 10px;
+    margin-left: 20px;
+}
+
+/* Pola podświetlają się na szaro po zaznaczeniu checkboxa */
+input[type="text"][disabled] {
+    background-color: #eee;
+}
+
+.closed-label {
+    margin-left: 5px;
+}
+
+.opening-hours-row {
+    display: flex;
+    align-items: center;
+    }

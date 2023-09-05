@@ -1,13 +1,9 @@
-/* style.css */
-
-/* Resetowanie domyślnych marginesów i paddingów dla wszystkich elementów */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* Ustawienie tła całej strony */
 body {
     background-color: #f0f0f0;
     font-family: Arial, sans-serif;
@@ -19,7 +15,6 @@ body {
     text-align: center;
 }
 
-/* Wyśrodkowanie zawartości strony */
 .container {
     display: flex;
     flex-direction: column;
@@ -31,7 +26,6 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Cień */
 }
 
-/* Stylizacja nagłówka */
 header {
     background-color: #f0f0f0;
     padding: 10px;
