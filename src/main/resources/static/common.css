@@ -1,0 +1,65 @@
+/* style.css */
+
+/* Resetowanie domyślnych marginesów i paddingów dla wszystkich elementów */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Ustawienie tła całej strony */
+body {
+    background-color: #f0f0f0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+}
+
+/* Wyśrodkowanie zawartości strony */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background-color: #fff; /* Kolor tła kontenera z zawartością */
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Cień */
+}
+
+/* Stylizacja nagłówka */
+header {
+    background-color: #f0f0f0;
+    padding: 10px;
+}
+
+img {
+    border: none !important;
+    outline: none !important;
+}
+
+/* Stylizacja logo */
+#logo img {
+    max-width: 200px;
+    height: auto;
+    background-color: white;
+}
+
+/* Stylizacja przycisków */
+#buttons a {
+    display: inline-block;
+    margin: 10px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+#buttons a:hover {
+    background-color: #0056b3;
+}
