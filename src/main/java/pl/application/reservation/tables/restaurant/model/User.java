@@ -1,6 +1,7 @@
 package pl.application.reservation.tables.restaurant.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -12,6 +13,7 @@ import java.time.LocalDateTime;
 @Setter
 @ToString
 @EqualsAndHashCode
+
 @Entity(name = "tusers")
 public class User {
     @Id
@@ -29,10 +31,6 @@ public class User {
     private LocalDateTime created_at;
     private LocalDateTime updated_at;
 
-    public User(int id) {
-        this.id = id;
-    }
-
     public static User copyOf(User user) {
         User result = new User();
         result.id = user.id;
@@ -46,7 +44,6 @@ public class User {
         result.updated_at = user.updated_at;
         return result;
     }
-
 
     public enum Role {
         ADMIN,
