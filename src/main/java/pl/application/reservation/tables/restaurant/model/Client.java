@@ -9,8 +9,8 @@ import lombok.*;
 @AllArgsConstructor
 @ToString
 @EqualsAndHashCode
-@Entity(name = "tcustomers")
-public class Customer {
+@Entity(name = "tclients")
+public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int customer_id;

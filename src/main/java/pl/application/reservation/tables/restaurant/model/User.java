@@ -1,12 +1,11 @@
 package pl.application.reservation.tables.restaurant.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
-import java.util.Optional;
+
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -14,7 +13,6 @@ import java.util.Optional;
 @Setter
 @ToString
 @EqualsAndHashCode
-
 @Entity(name = "tusers")
 public class User {
     @Id

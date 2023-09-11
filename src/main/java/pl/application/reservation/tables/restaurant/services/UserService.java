@@ -1,7 +1,6 @@
 package pl.application.reservation.tables.restaurant.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import pl.application.reservation.tables.restaurant.model.User;
 import pl.application.reservation.tables.restaurant.repository.UserRepository;
@@ -11,46 +10,23 @@ import java.util.Optional;
 
 @Service
 public class UserService{
-    private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
 
-    @Autowired
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-    }
+        private final UserRepository userRepository;
 
-    public User registerCustomer(User user) {
-        if(userRepository.findByEmail(user.getEmail()).isPresent()) {
-            throw new RuntimeException("Użytkownik o podanym adresie email już istnieje.");
+        @Autowired
+        public UserService(UserRepository userRepository) {
+            this.userRepository = userRepository;
         }
 
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRole(User.Role.CUSTOMER);
-        user.setCreated_at(LocalDateTime.now());
-        user.setUpdated_at(LocalDateTime.now());
-
-        return userRepository.save(user);
-
-    }
-
-    public User registerRestaurantOwner(User user) {
-        // Sprawdzamy, czy użytkownik o podanym adresie email już istnieje
-        if (userRepository.findByEmail(user.getEmail()).isPresent()) {
-            throw new RuntimeException("Użytkownik o podanym adresie email już istnieje.");
+        public User registerUser(User user) {
+            // Dodaj logikę rejestracji użytkownika, np. walidację, hashowanie hasła, ustawienie roli, itp.
+            // Następnie zapisz użytkownika w bazie danych
+            return userRepository.save(user);
         }
 
-        // Zakoduj hasło przed zapisem do bazy danych
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRole(User.Role.RESTAURANT_OWNER);
-        user.setCreated_at(LocalDateTime.now());
-        user.setUpdated_at(LocalDateTime.now());
+        public  Optional<User> getUserByEmail(String email) {
+            return userRepository.findByEmail(email);
+        }
 
-        // Zapisz użytkownika w bazie danych
-        return userRepository.save(user);
+        // Dodaj inne metody serwisowe związane z użytkownikami, jeśli są potrzebne
     }
-
-    public Optional<User> findByEmail(String email) {
-        return userRepository.findByEmail(email);
-    }
-}
