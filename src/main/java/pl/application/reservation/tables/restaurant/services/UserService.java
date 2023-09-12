@@ -18,8 +18,7 @@ public class UserService{
     }
 
     public User registerUser(User user) {
-        // Dodaj logikę rejestracji użytkownika, np. walidację, hashowanie hasła, ustawienie roli, itp.
-        // Następnie zapisz użytkownika w bazie danych
+
         return IUserRepository.save(user);
     }
 
@@ -27,6 +26,6 @@ public class UserService{
         return IUserRepository.findByEmail(email);
     }
 
-//        public User loginUser () {};
+
 
 }
