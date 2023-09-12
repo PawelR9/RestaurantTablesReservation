@@ -7,6 +7,6 @@ import pl.application.reservation.tables.restaurant.model.User;
 import java.util.Optional;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Integer> {
+public interface IUserRepository extends JpaRepository<User, Integer> {
     Optional<User> findByEmail(String email);
 }

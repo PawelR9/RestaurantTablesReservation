@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 import pl.application.reservation.tables.restaurant.model.RestaurantOwner;
 
 @Repository
-public interface RestaurantOwnerRepository extends JpaRepository<RestaurantOwner, Integer> {
+public interface IRestaurantOwnerRepository extends JpaRepository<RestaurantOwner, Integer> {
 }
