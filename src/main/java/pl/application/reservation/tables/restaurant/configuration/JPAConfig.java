@@ -1,22 +1,32 @@
 package pl.application.reservation.tables.restaurant.configuration;
 
-import jakarta.persistence.EntityManagerFactory;
+import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 
 import javax.sql.DataSource;
+import java.util.HashMap;
+import java.util.Map;
 
-@Configuration
+
 @EnableJpaRepositories("pl.application.reservation.tables.restaurant.repository")
-public class JpaConfig {
+public class JPAConfig {
+
     @Bean
-    public EntityManagerFactory entityManagerFactory(DataSource dataSource) {
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory(
+            DataSource dataSource) {
         LocalContainerEntityManagerFactoryBean emf = new LocalContainerEntityManagerFactoryBean();
         emf.setDataSource(dataSource);
+        Map<String, Object> jpaProperties = new HashMap<>();
+        jpaProperties.put("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
+
+        emf.setPersistenceProviderClass(HibernatePersistenceProvider.class);
+        emf.setJpaPropertyMap(jpaProperties);
         emf.setPackagesToScan("pl.application.reservation.tables.restaurant.model");
-        emf.afterPropertiesSet();
-        return emf.getObject();
+        return emf;
     }
 }
+
+
+

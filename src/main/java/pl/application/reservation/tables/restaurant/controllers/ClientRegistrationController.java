@@ -1,14 +1,16 @@
-package pl.application.reservation.tables.restaurant.controllers.rest;
-
+package pl.application.reservation.tables.restaurant.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import pl.application.reservation.tables.restaurant.model.dto.ClientRegistrationDTO;
 import pl.application.reservation.tables.restaurant.services.ClientService;
 
-@RestController
-@RequestMapping(path = "api")
+@Controller
+@RequestMapping(path = "/clientRegistrationForm")
 public class ClientRegistrationController {
 
     private final ClientService clientService;
@@ -18,17 +20,14 @@ public class ClientRegistrationController {
         this.clientService = clientService;
     }
 
-    @GetMapping("/clientRegistrationForm")
+    @GetMapping
     public String showClientRegistrationForm(Model model) {
-
         model.addAttribute("clientRegistrationDTO", new ClientRegistrationDTO());
         return "clientRegistrationForm";
     }
-
-
-    @PostMapping("registerClient")
+    @PostMapping("/registerClient")
     public String registerClient (ClientRegistrationDTO clientRegistrationDTO) {
         clientService.registerClient(clientRegistrationDTO);
-        return "redirect:api/clientRegistrationForm";
+        return "redirect:index";
     }
 }
