@@ -11,6 +11,7 @@ public class ClientRegistrationDTO {
     private String lastName;
     private String email;
     private String phone;
+    private String password;
     private User.Role role = User.Role.CUSTOMER;
 
 }

@@ -6,18 +6,18 @@ import org.springframework.transaction.annotation.Transactional;
 import pl.application.reservation.tables.restaurant.model.Client;
 import pl.application.reservation.tables.restaurant.model.User;
 import pl.application.reservation.tables.restaurant.model.dto.ClientRegistrationDTO;
-import pl.application.reservation.tables.restaurant.repository.IClientRepository;
+import pl.application.reservation.tables.restaurant.repository.ISqlClientRepository;
 import pl.application.reservation.tables.restaurant.repository.IUserRepository;
 
 import java.time.LocalDateTime;
 
 @Service
 public class ClientService {
-    private final IClientRepository clientRepository;
+    private final ISqlClientRepository clientRepository;
     private final IUserRepository userRepository;
 
     @Autowired
-    public ClientService(IClientRepository clientRepository, IUserRepository userRepository) {
+    public ClientService(ISqlClientRepository clientRepository, IUserRepository userRepository) {
         this.clientRepository = clientRepository;
         this.userRepository = userRepository;
     }

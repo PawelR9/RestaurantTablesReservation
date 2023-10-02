@@ -20,7 +20,7 @@ public class ClientRegistrationController {
         this.clientService = clientService;
     }
 
-    @GetMapping
+    @GetMapping()
     public String showClientRegistrationForm(Model model) {
         model.addAttribute("clientRegistrationDTO", new ClientRegistrationDTO());
         return "clientRegistrationForm";
@@ -28,6 +28,6 @@ public class ClientRegistrationController {
     @PostMapping("/registerClient")
     public String registerClient (ClientRegistrationDTO clientRegistrationDTO) {
         clientService.registerClient(clientRegistrationDTO);
-        return "redirect:index";
+        return "redirect:/index";
     }
 }
