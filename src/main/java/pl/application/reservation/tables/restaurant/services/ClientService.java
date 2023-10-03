@@ -1,8 +1,10 @@
 package pl.application.reservation.tables.restaurant.services;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import pl.application.reservation.tables.restaurant.exceptions.UserAlreadyExistException;
 import pl.application.reservation.tables.restaurant.model.Client;
 import pl.application.reservation.tables.restaurant.model.User;
 import pl.application.reservation.tables.restaurant.model.dto.ClientRegistrationDTO;
@@ -23,7 +25,7 @@ public class ClientService {
     }
 
     @Transactional
-    public void registerClient(ClientRegistrationDTO clientRegistrationDTO) {
+    public void registerClient(ClientRegistrationDTO clientRegistrationDTO) throws UserAlreadyExistException {
 
         User user = new User();
 
@@ -31,6 +33,7 @@ public class ClientService {
         user.setLast_name(clientRegistrationDTO.getLastName());
         user.setEmail(clientRegistrationDTO.getEmail());
         user.setPhone_number(clientRegistrationDTO.getPhone());
+        user.setPassword(DigestUtils.md5Hex(clientRegistrationDTO.getPassword()));
         user.setRole(clientRegistrationDTO.getRole());
         user.setCreated_at(LocalDateTime.now());
 

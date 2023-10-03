@@ -1,4 +1,6 @@
 package pl.application.reservation.tables.restaurant.exceptions;
 
-public class UserAlreadyExistException extends Exception{
+import java.sql.SQLIntegrityConstraintViolationException;
+
+public class UserAlreadyExistException extends SQLIntegrityConstraintViolationException {
 }

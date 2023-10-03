@@ -11,6 +11,7 @@ public class RestaurantRegistrationDTO {
     private String address;
     private String email;
     private String phone;
+    private String password;
     private String openingHoursMondayFrom;
     private String openingHoursMondayTo;
     private boolean openingHoursMondayClosed;

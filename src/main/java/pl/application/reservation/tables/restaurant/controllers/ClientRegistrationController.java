@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import pl.application.reservation.tables.restaurant.exceptions.UserAlreadyExistException;
 import pl.application.reservation.tables.restaurant.model.dto.ClientRegistrationDTO;
 import pl.application.reservation.tables.restaurant.services.ClientService;
 
@@ -25,9 +26,15 @@ public class ClientRegistrationController {
         model.addAttribute("clientRegistrationDTO", new ClientRegistrationDTO());
         return "clientRegistrationForm";
     }
+
     @PostMapping("/registerClient")
-    public String registerClient (ClientRegistrationDTO clientRegistrationDTO) {
-        clientService.registerClient(clientRegistrationDTO);
-        return "redirect:/index";
+    public String registerClient(ClientRegistrationDTO clientRegistrationDTO) {
+        try {
+            clientService.registerClient(clientRegistrationDTO);
+            return "redirect:/index";
+        } catch (UserAlreadyExistException e) {
+            return "redirect:/clientRegistrationForm";
+        }
+
     }
 }
