@@ -28,6 +28,9 @@ public class ClientService {
     public void registerClient(ClientRegistrationDTO clientRegistrationDTO) throws UserAlreadyExistException {
 
         User user = new User();
+        if(userRepository.findByEmail(clientRegistrationDTO.getEmail()).isPresent()){
+            throw new UserAlreadyExistException();
+        }
 
         user.setFirst_name(clientRegistrationDTO.getFirstName());
         user.setLast_name(clientRegistrationDTO.getLastName());

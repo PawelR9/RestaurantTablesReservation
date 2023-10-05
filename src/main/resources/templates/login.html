@@ -16,6 +16,7 @@
     </header>
 
     <main>
+        <div th:if="${correctRegistrationMessage}" th:text="${correctRegistrationMessage}">CorrectRegistration</div>
         <h1>Podaj dane logowania</h1>
         <form th:action="@{/login}" method="POST">
             <div class="form-group">

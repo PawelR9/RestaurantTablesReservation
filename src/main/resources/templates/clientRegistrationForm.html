@@ -18,28 +18,29 @@
 
     <main>
         <h1 class="registration-header">Rejestracja Klienta</h1>
-        <form th:action="@{clientRegistrationForm/registerClient}" method="post" th:object="${client}" onsubmit="return validate()">
+        <form th:action="@{/clientRegistrationForm/registerClient}" method="post" th:object="${client}" onsubmit="return validate()">
 
             <div id="info"></div>
 
             <div class="form-group">
                 <label for="firstName">Imię:</label>
-                <input type="text" id="firstName" name="firstName" required>
+                <input type="text" id="firstName" name="firstName" th:field="*{firstName}" required>
             </div>
 
             <div class="form-group">
                 <label for="lastName">Nazwisko:</label>
-                <input type="text" id="lastName" name="lastName" required >
+                <input type="text" id="lastName" name="lastName" th:field="*{lastName}" required>
             </div>
 
             <div class="form-group">
                 <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
+                <input type="email" id="email" name="email" th:field="*{email}" required>
+                <div th:if="${errorMessage}" th:text="${errorMessage}">Error</div>
             </div>
 
             <div class="form-group">
                 <label for="phone">Nr telefonu:</label>
-                <input type="tel" id="phone" name="phone" required>
+                <input type="tel" id="phone" name="phone" th:field="*{phone}" required>
             </div>
 
             <div class="form-group">
