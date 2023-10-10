@@ -19,6 +19,7 @@
         <div th:if="${correctRegistrationMessage}" th:text="${correctRegistrationMessage}">CorrectRegistration</div>
         <h1>Podaj dane logowania</h1>
         <form th:action="@{/login}" method="POST">
+            <div id="info" th:text="${info}"></div>
             <div class="form-group">
                 <label for="email">Adres email:</label>
                 <input type="text" id="email" name="email" required>
