@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Strona główna</title>
+    <link rel="stylesheet" type="text/css" href="common.css">
+</head>
+<body>
+<div class="container">
+    <div th:replace="fragments.html :: logout"></div>
+    <main>
+        <div th:if="${correctLogIn}" th:text="${correctLogIn}">CorrectLogIn</div>
+    </main>
+    <header>
+        <div id="logo">
+            <img src="logo.png" alt="Logo Aplikacji">
+        </div>
+    </header>
+
+
+
+    <footer>
+        <p>&copy; 2023 Rezerwacja Stolików w Restauracjach</p>
+    </footer>
+</div>
+</body>
+</html>

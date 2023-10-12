@@ -8,7 +8,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.application.reservation.tables.restaurant.exceptions.UserValidationException;
+import pl.application.reservation.tables.restaurant.model.User;
 import pl.application.reservation.tables.restaurant.services.IAuthenticationService;
 import pl.application.reservation.tables.restaurant.session.SessionData;
 
@@ -30,11 +32,17 @@ public class AuthenticationController {
 
     @PostMapping("login")
     public String login(@RequestParam String email,
-                        @RequestParam String password) {
+                        @RequestParam String password,
+                        Model model,
+                        RedirectAttributes redirectAttributes) {
         try {
             this.authenticationService.authenticate(email, password);
             if (sessionData.isLogged()) {
-                return "redirect:/index";
+                User user = sessionData.getUser();
+                model.addAttribute("logged", true);
+                model.addAttribute("user", user);
+                redirectAttributes.addFlashAttribute("correctLogIn", "Zostałeś poprawnie zalogowany");
+                return "/main";
             }
         } catch (UserValidationException e) {
         }

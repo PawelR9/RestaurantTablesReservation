@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<div id="logout" th:fragment="logout">
+    <div th:if="${logged}">
+        <p>Zalogowano jako <span th:text="${user.first_name}"></span></p>
+        <form th:action="@{/logout}" method="get">
+            <button type="submit">Wyloguj</button>
+        </form>
+    </div>
+</div>
