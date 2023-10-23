@@ -5,10 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Strona główna</title>
     <link rel="stylesheet" type="text/css" href="common.css">
+    <link rel="stylesheet" type="text/css" href="fragments.css">
 </head>
 <body>
 <div class="container">
-    <div th:replace="fragments.html :: logout"></div>
+    <div th:replace="~{fragments.html :: logout}"></div>
     <main>
         <div th:if="${logged}">
             <div th:if="${correctLogIn}" th:text="${correctLogIn}">CorrectLogIn</div>

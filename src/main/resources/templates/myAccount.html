@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moje konto</title>
+    <link rel="stylesheet" type="text/css" href="common.css">
+</head>
+<body>
+<h1>Moje Konto</h1>
+<form th:action="@{/konto}" method="post" th:object="${client}"  onsubmit="return validate()">
+    <div th:if="${correctSave}" th:text="${correctSave}">correctSave</div>
+    <div class="form-group">
+        <label for="firstName">Imię:</label>
+        <input type="text" id="firstName" name="firstName" th:value="*{firstName}" required>
+    </div>
+    <div class="form-group">
+        <label for="lastName">Nazwisko:</label>
+        <input type="text" id="lastName" name="lastName" th:value="*{lastName}" required>
+    </div>
+    <div class="form-group">
+        <label for="email">Adres email:</label>
+        <input type="email" id="email" name="email" th:value="*{email}" readonly>
+    </div>
+    <div class="form-group">
+        <label for="phoneNumber">Numer telefonu:</label>
+        <input type="text" id="phoneNumber" name="phoneNumber" th:value="*{phoneNumber}">
+    </div>
+    <button type="submit">Zapisz zmiany</button>
+</form>
+</body>
+</html>

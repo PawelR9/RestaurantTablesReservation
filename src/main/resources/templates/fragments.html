@@ -4,11 +4,16 @@
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
-<div id="logout" th:fragment="logout">
+<div class="logout" id="logout" th:fragment="logout">
     <div th:if="${logged}">
         <p>Zalogowano jako <span th:text="${user.first_name}"></span></p>
+        <div class="buttony">
         <form th:action="@{/logout}" method="get">
-            <button type="submit">Wyloguj</button>
+            <button type="submit" class="button">Wyloguj</button>
         </form>
+        <form th:action="@{/konto}" method="get">
+            <button type="submit" class="button">Konto</button>
+        </form>
+        </div>
     </div>
 </div>

@@ -8,6 +8,7 @@ import pl.application.reservation.tables.restaurant.exceptions.UserAlreadyExistE
 import pl.application.reservation.tables.restaurant.model.Client;
 import pl.application.reservation.tables.restaurant.model.User;
 import pl.application.reservation.tables.restaurant.model.dto.ClientRegistrationDTO;
+import pl.application.reservation.tables.restaurant.model.dto.UpdateClientDTO;
 import pl.application.reservation.tables.restaurant.repository.ISqlClientRepository;
 import pl.application.reservation.tables.restaurant.repository.IUserRepository;
 
@@ -50,5 +51,15 @@ public class ClientService {
         client.setPhone_number(clientRegistrationDTO.getPhone());
 
         clientRepository.save(client);
+    }
+
+    @Transactional
+    public void updateClient(UpdateClientDTO updateClientDTO, User user) {
+        user.setFirst_name(updateClientDTO.getFirstName());
+        user.setFirst_name(updateClientDTO.getLastName());
+        user.setPhone_number(updateClientDTO.getPhone());
+        userRepository.save(user);
+
+
     }
 }

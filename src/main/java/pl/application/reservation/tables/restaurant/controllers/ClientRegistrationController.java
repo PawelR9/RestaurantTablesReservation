@@ -25,7 +25,7 @@ public class ClientRegistrationController {
     }
 
     @GetMapping()
-    public String showClientRegistrationForm(@ModelAttribute("client") ClientRegistrationDTO clientRegistrationDTO, BindingResult bindingResult, Model model) {
+    public String showClientRegistrationForm(@ModelAttribute("client") ClientRegistrationDTO clientRegistrationDTO, Model model) {
         String error = (String) model.getAttribute("error");
         ClientRegistrationDTO clientRegistrationDTOModel = (ClientRegistrationDTO) model.getAttribute("model");
         model.addAttribute("client", clientRegistrationDTOModel == null ? clientRegistrationDTO : clientRegistrationDTOModel);
