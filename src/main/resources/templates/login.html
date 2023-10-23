@@ -17,6 +17,7 @@
 
     <main>
         <div th:if="${correctRegistration}" th:text="${correctRegistration}">CorrectRegistration</div>
+        <div th:if="${error}" th:text="${error}">error</div>
         <h1>Podaj dane logowania</h1>
         <form th:action="@{/login}" method="POST">
             <div id="info" th:text="${info}"></div>

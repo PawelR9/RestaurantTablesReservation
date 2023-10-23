@@ -23,7 +23,7 @@ public class AuthenticationController {
     @Resource
     SessionData sessionData;
 
-    @GetMapping("/login")
+    @GetMapping("login")
     public String login(Model model) {
         ModelUtils.addCommonDataToModel(model, this.sessionData);
         model.addAttribute("info", this.sessionData.getInfo());
@@ -33,20 +33,16 @@ public class AuthenticationController {
     @PostMapping("login")
     public String login(@RequestParam String email,
                         @RequestParam String password,
-                        Model model,
                         RedirectAttributes redirectAttributes) {
         try {
             this.authenticationService.authenticate(email, password);
             if (sessionData.isLogged()) {
-                User user = sessionData.getUser();
-                model.addAttribute("logged", true);
-                model.addAttribute("user", user);
                 redirectAttributes.addFlashAttribute("correctLogIn", "Zostałeś poprawnie zalogowany");
-                return "/main";
+                return "redirect:/main";
             }
         } catch (UserValidationException e) {
         }
-        this.sessionData.setInfo("Niepoprawny login lub hasło");
+        redirectAttributes.addFlashAttribute("error", "Niepoprawny login lub hasło");
         return "redirect:/login";
     }
 
