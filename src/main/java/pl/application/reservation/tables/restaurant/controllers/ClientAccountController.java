@@ -40,8 +40,9 @@ public class ClientAccountController {
             UpdateClientDTO updateClientDTO = new UpdateClientDTO();
             updateClientDTO.setFirstName(user.getFirst_name());
             updateClientDTO.setLastName(user.getLast_name());
-            updateClientDTO.setPhone(user.getPhone_number());
-            model.addAttribute("updateClientDTO", updateClientDTO);
+            updateClientDTO.setEmail(user.getEmail());
+            updateClientDTO.setPhoneNumber(user.getPhone_number());
+            model.addAttribute("client", updateClientDTO);
             return "myAccount";
         } else {
             return "redirect:/login";
@@ -55,7 +56,7 @@ public class ClientAccountController {
         if (user != null) {
             clientService.updateClient(updateClientDTO, user);
 
-            redirectAttributes.addAttribute("correctSave", "Dane zostały poprawnie zmienione");
+            redirectAttributes.addFlashAttribute("correctSave", "Dane zostały poprawnie zmienione");
             return "redirect:/konto";
         } else
             return "redirect:/login";

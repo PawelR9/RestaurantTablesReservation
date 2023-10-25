@@ -53,13 +53,11 @@ public class ClientService {
         clientRepository.save(client);
     }
 
-    @Transactional
+
     public void updateClient(UpdateClientDTO updateClientDTO, User user) {
         user.setFirst_name(updateClientDTO.getFirstName());
         user.setFirst_name(updateClientDTO.getLastName());
-        user.setPhone_number(updateClientDTO.getPhone());
+        user.setPhone_number(updateClientDTO.getPhoneNumber());
         userRepository.save(user);
-
-
     }
 }
