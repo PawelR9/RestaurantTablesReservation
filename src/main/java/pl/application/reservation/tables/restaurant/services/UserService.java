@@ -8,16 +8,20 @@ import pl.application.reservation.tables.restaurant.repository.IUserRepository;
 @Service
 public class UserService{
 
-    private final IUserRepository IUserRepository;
+    private final IUserRepository userRepository;
 
     @Autowired
     public UserService(IUserRepository IUserRepository) {
-        this.IUserRepository = IUserRepository;
+        this.userRepository = IUserRepository;
     }
 
     public User registerUser(User user) {
 
-        return IUserRepository.save(user);
+        return userRepository.save(user);
+    }
+
+    public void updateUserData(Long userId, String firstName, String lastName, String phoneNumber) {
+        userRepository.updateUserData(userId, firstName, lastName, phoneNumber);
     }
 
 }

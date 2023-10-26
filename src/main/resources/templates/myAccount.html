@@ -24,15 +24,15 @@
         <input type="text" id="lastName" name="lastName" th:value="*{lastName}" required>
     </div>
     <div class="form-group">
-        <label for="email">Adres email:</label>
-        <input type="email" id="email" name="email" th:value="*{email}" readonly>
+        <label for="emailReadonly">Adres email:</label>
+        <input type="email" id="emailReadonly" name="emailReadonly" th:value="*{email}" readonly>
     </div>
     <div class="form-group">
         <label for="phoneNumber">Numer telefonu:</label>
         <input type="text" id="phoneNumber" name="phoneNumber" th:value="*{phoneNumber}">
     </div>
-    <button type="submit" class="changePassword-button">Zmień hasło</button><br>
-    <button type="submit" class="submit-button">Zapisz zmiany</button>
+    <button type="submit" id="changePasswordButton">Zmień hasło</button><br>
+    <button type="submit" id="saveChangesButton">Zapisz zmiany</button>
 </form>
 <footer>
     <p>&copy; 2023 Rezerwacja Stolików w Restauracjach</p>

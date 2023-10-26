@@ -1,6 +1,7 @@
 package pl.application.reservation.tables.restaurant.services;
 
 import org.apache.commons.codec.digest.DigestUtils;
+import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -51,13 +52,5 @@ public class ClientService {
         client.setPhone_number(clientRegistrationDTO.getPhone());
 
         clientRepository.save(client);
-    }
-
-
-    public void updateClient(UpdateClientDTO updateClientDTO, User user) {
-        user.setFirst_name(updateClientDTO.getFirstName());
-        user.setFirst_name(updateClientDTO.getLastName());
-        user.setPhone_number(updateClientDTO.getPhoneNumber());
-        userRepository.save(user);
     }
 }

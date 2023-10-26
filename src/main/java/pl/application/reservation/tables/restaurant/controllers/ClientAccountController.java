@@ -49,7 +49,7 @@ public class ClientAccountController {
         }
     }
 
-    @PostMapping
+    /*@PostMapping
     public String updateMyAccount(@ModelAttribute UpdateClientDTO updateClientDTO,
                                   RedirectAttributes redirectAttributes) {
         User user = sessionData.getUser();
@@ -60,5 +60,5 @@ public class ClientAccountController {
             return "redirect:/konto";
         } else
             return "redirect:/login";
-    }
+    }*/
 }
