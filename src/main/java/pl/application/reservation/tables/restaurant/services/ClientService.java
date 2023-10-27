@@ -1,7 +1,6 @@
 package pl.application.reservation.tables.restaurant.services;
 
 import org.apache.commons.codec.digest.DigestUtils;
-import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -9,19 +8,18 @@ import pl.application.reservation.tables.restaurant.exceptions.UserAlreadyExistE
 import pl.application.reservation.tables.restaurant.model.Client;
 import pl.application.reservation.tables.restaurant.model.User;
 import pl.application.reservation.tables.restaurant.model.dto.ClientRegistrationDTO;
-import pl.application.reservation.tables.restaurant.model.dto.UpdateClientDTO;
-import pl.application.reservation.tables.restaurant.repository.ISqlClientRepository;
+import pl.application.reservation.tables.restaurant.repository.IClientRepository;
 import pl.application.reservation.tables.restaurant.repository.IUserRepository;
 
 import java.time.LocalDateTime;
 
 @Service
 public class ClientService {
-    private final ISqlClientRepository clientRepository;
+    private final IClientRepository clientRepository;
     private final IUserRepository userRepository;
 
     @Autowired
-    public ClientService(ISqlClientRepository clientRepository, IUserRepository userRepository) {
+    public ClientService(IClientRepository clientRepository, IUserRepository userRepository) {
         this.clientRepository = clientRepository;
         this.userRepository = userRepository;
     }
@@ -52,5 +50,11 @@ public class ClientService {
         client.setPhone_number(clientRegistrationDTO.getPhone());
 
         clientRepository.save(client);
+
+    }
+
+    @Transactional
+    public void updateUserData(int userId, String firstName, String lastName, String phoneNumber, LocalDateTime localDateTime) {
+        clientRepository.updateUserData(userId, firstName, lastName, phoneNumber, localDateTime);
     }
 }

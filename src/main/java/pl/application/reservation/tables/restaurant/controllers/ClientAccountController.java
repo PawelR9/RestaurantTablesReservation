@@ -15,6 +15,8 @@ import pl.application.reservation.tables.restaurant.repository.IUserRepository;
 import pl.application.reservation.tables.restaurant.services.ClientService;
 import pl.application.reservation.tables.restaurant.session.SessionData;
 
+import java.time.LocalDateTime;
+
 @Controller
 @RequestMapping("/konto")
 public class ClientAccountController {
@@ -49,16 +51,22 @@ public class ClientAccountController {
         }
     }
 
-    /*@PostMapping
-    public String updateMyAccount(@ModelAttribute UpdateClientDTO updateClientDTO,
-                                  RedirectAttributes redirectAttributes) {
+    @PostMapping()
+    public String updateUserData(@ModelAttribute UpdateClientDTO updateClientDTO,
+                                 RedirectAttributes redirectAttributes) {
         User user = sessionData.getUser();
         if (user != null) {
-            clientService.updateClient(updateClientDTO, user);
-
+            clientService.updateUserData(user.getId(), updateClientDTO.getFirstName(),
+                          updateClientDTO.getLastName(),
+                          updateClientDTO.getPhoneNumber(),
+                          LocalDateTime.now());
+            updateClientDTO.setFirstName("");
+            updateClientDTO.setLastName("");
+            updateClientDTO.setPhoneNumber("");
             redirectAttributes.addFlashAttribute("correctSave", "Dane zostały poprawnie zmienione");
-            return "redirect:/konto";
-        } else
+        } else {
             return "redirect:/login";
-    }*/
+        }
+        return "redirect:/konto";
+    }
 }

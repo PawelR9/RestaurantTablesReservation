@@ -19,9 +19,4 @@ public class UserService{
 
         return userRepository.save(user);
     }
-
-    public void updateUserData(Long userId, String firstName, String lastName, String phoneNumber) {
-        userRepository.updateUserData(userId, firstName, lastName, phoneNumber);
-    }
-
 }

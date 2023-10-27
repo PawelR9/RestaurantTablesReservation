@@ -15,10 +15,10 @@ public class RestaurantOwnerService {
     }
 
     public RestaurantOwner registerRestaurantOwner(RestaurantOwner restaurantOwner) {
-        // Dodaj logikę rejestracji właściciela restauracji, jeśli jest potrzebna
-        // Następnie zapisz właściciela restauracji w bazie danych
+        // Dodać logikę rejestracji właściciela restauracji,
+        // Następnie zapisać właściciela restauracji w bazie danych
         return IRestaurantOwnerRepository.save(restaurantOwner);
     }
 
-    // Dodaj inne metody serwisowe związane z właścicielami restauracji, jeśli są potrzebne
+    // Dodać inne metody serwisowe związane z właścicielami restauracji
 }

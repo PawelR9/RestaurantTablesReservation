@@ -30,19 +30,6 @@ public class User {
     private LocalDateTime created_at;
     private LocalDateTime updated_at;
 
-    public static User copyOf(User user) {
-        User result = new User();
-        result.id = user.id;
-        result.first_name = user.first_name;
-        result.last_name = user.last_name;
-        result.email = user.email;
-        result.password = user.password;
-        result.role = user.role;
-        result.phone_number = user.phone_number;
-        result.created_at = user.created_at;
-        result.updated_at = user.updated_at;
-        return result;
-    }
 
     public enum Role {
         ADMIN,

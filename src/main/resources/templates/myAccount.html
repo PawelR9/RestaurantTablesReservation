@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,9 +8,11 @@
     <link rel="stylesheet" type="text/css" href="clientForm.css">
     <script src="/updateClient-validator.js"></script>
 </head>
+
 <body>
+<div class="container">
 <h1>Moje Konto</h1>
-<form th:action="@{/konto}" method="post" th:object="${client}"  onsubmit="return validate()">
+<form th:action="@{/konto}" method="post" th:object="${client}"  onsubmit="return validate()" autocomplete="off">
 
     <div id="info"></div>
 
@@ -31,11 +33,13 @@
         <label for="phoneNumber">Numer telefonu:</label>
         <input type="text" id="phoneNumber" name="phoneNumber" th:value="*{phoneNumber}">
     </div>
-    <button type="submit" id="changePasswordButton">Zmień hasło</button><br>
-    <button type="submit" id="saveChangesButton">Zapisz zmiany</button>
+    <button type="submit" id="saveChangesButton">Zapisz zmiany</button><br>
+    <button type="submit" id="changePasswordButton">Zmień hasło</button>
+
 </form>
 <footer>
     <p>&copy; 2023 Rezerwacja Stolików w Restauracjach</p>
 </footer>
+</div>
 </body>
 </html>

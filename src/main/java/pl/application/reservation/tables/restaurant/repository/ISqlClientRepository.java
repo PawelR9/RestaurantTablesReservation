@@ -5,6 +5,6 @@ import org.springframework.stereotype.Repository;
 import pl.application.reservation.tables.restaurant.model.Client;
 
 @Repository
-public interface ISqlClientRepository extends IClientRepository, JpaRepository<Client, Integer> {
-    }
+public interface ISqlClientRepository extends JpaRepository<Client, Integer> {
+}
 
