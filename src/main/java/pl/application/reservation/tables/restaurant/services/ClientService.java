@@ -4,57 +4,64 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import pl.application.reservation.tables.restaurant.exceptions.UserAlreadyExistException;
-import pl.application.reservation.tables.restaurant.model.Client;
+import pl.application.reservation.tables.restaurant.exceptions.UserWithThisEmailAlreadyExistException;
+import pl.application.reservation.tables.restaurant.exceptions.UserWithThisLoginAlreadyExistException;
 import pl.application.reservation.tables.restaurant.model.User;
 import pl.application.reservation.tables.restaurant.model.dto.ClientRegistrationDTO;
-import pl.application.reservation.tables.restaurant.repository.IClientRepository;
 import pl.application.reservation.tables.restaurant.repository.IUserRepository;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Service
-public class ClientService {
-    private final IClientRepository clientRepository;
+public class ClientService implements IClientService {
+
     private final IUserRepository userRepository;
 
     @Autowired
-    public ClientService(IClientRepository clientRepository, IUserRepository userRepository) {
-        this.clientRepository = clientRepository;
+    public ClientService(IUserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
+    @Override
     @Transactional
-    public void registerClient(ClientRegistrationDTO clientRegistrationDTO) throws UserAlreadyExistException {
+    public void registerClient(ClientRegistrationDTO clientRegistrationDTO) throws  UserWithThisEmailAlreadyExistException, UserWithThisLoginAlreadyExistException {
 
-        User user = new User();
-        if(userRepository.findByEmail(clientRegistrationDTO.getEmail()).isPresent()){
-            throw new UserAlreadyExistException();
+        if (userRepository.findByLogin(clientRegistrationDTO.getLogin()).isPresent()) {
+            throw new UserWithThisLoginAlreadyExistException();
         }
 
-        user.setFirst_name(clientRegistrationDTO.getFirstName());
-        user.setLast_name(clientRegistrationDTO.getLastName());
-        user.setEmail(clientRegistrationDTO.getEmail());
-        user.setPhone_number(clientRegistrationDTO.getPhone());
-        user.setPassword(DigestUtils.md5Hex(clientRegistrationDTO.getPassword()));
+        if (userRepository.findByEmail(clientRegistrationDTO.getEmail()).isPresent()) {
+            throw new UserWithThisEmailAlreadyExistException();
+        }
+
+        User user = new User();
         user.setRole(clientRegistrationDTO.getRole());
-        user.setCreated_at(LocalDateTime.now());
+        user.setLogin(clientRegistrationDTO.getLogin());
+        user.setFirstName(clientRegistrationDTO.getFirstName());
+        user.setLastName(clientRegistrationDTO.getLastName());
+        user.setEmail(clientRegistrationDTO.getEmail().toLowerCase());
+        user.setPhoneNumber(clientRegistrationDTO.getPhoneNumber());
+        user.setPassword(DigestUtils.md5Hex(clientRegistrationDTO.getPassword()));
+        user.setCreatedAt(LocalDateTime.now());
 
-        user = userRepository.save(user);
-
-        Client client = new Client();
-        client.setUser(user);
-        client.setFirst_name(clientRegistrationDTO.getFirstName());
-        client.setLast_name(clientRegistrationDTO.getLastName());
-        client.setEmail(clientRegistrationDTO.getEmail());
-        client.setPhone_number(clientRegistrationDTO.getPhone());
-
-        clientRepository.save(client);
-
+        userRepository.save(user);
     }
 
+    @Override
     @Transactional
-    public void updateUserData(int userId, String firstName, String lastName, String phoneNumber, LocalDateTime localDateTime) {
-        clientRepository.updateUserData(userId, firstName, lastName, phoneNumber, localDateTime);
+    public void updateUserData(int userId, String login, String firstName, String lastName, String phoneNumber, LocalDateTime localDateTime) {
+        Optional<User> userOptional = userRepository.findById(userId);
+
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            user.setLogin(login);
+            user.setFirstName(firstName);
+            user.setLastName(lastName);
+            user.setPhoneNumber(phoneNumber);
+            user.setUpdatedAt(LocalDateTime.now());
+
+            userRepository.save(user);
+        }
     }
 }

@@ -21,8 +21,13 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
     SessionData sessionData;
 
     @Override
-    public void authenticate(String email, String password) {
-        Optional<User> userBox = this.userRepository.findByEmail(email);
+    public void authenticate(String loginOrEmail, String password) {
+        Optional<User> userBox;
+        if (loginOrEmail.contains("@")) {
+            userBox = this.userRepository.findByEmail(loginOrEmail.toLowerCase());
+        } else {
+            userBox = this.userRepository.findByLogin(loginOrEmail.toLowerCase());
+        }
         if (userBox.isPresent() && userBox.get().getPassword().equals(DigestUtils.md5Hex(password))) {
             userBox.get().setPassword(null);
             this.sessionData.setUser(userBox.get());

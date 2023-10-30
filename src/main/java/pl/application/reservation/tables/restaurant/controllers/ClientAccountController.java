@@ -39,12 +39,14 @@ public class ClientAccountController {
         User user = sessionData.getUser();
 
         if (user != null) {
+            user = userRepository.findById(user.getId()).get();
             UpdateClientDTO updateClientDTO = new UpdateClientDTO();
-            updateClientDTO.setFirstName(user.getFirst_name());
-            updateClientDTO.setLastName(user.getLast_name());
+            updateClientDTO.setLogin(user.getLogin());
+            updateClientDTO.setFirstName(user.getFirstName());
+            updateClientDTO.setLastName(user.getLastName());
             updateClientDTO.setEmail(user.getEmail());
-            updateClientDTO.setPhoneNumber(user.getPhone_number());
-            model.addAttribute("client", updateClientDTO);
+            updateClientDTO.setPhoneNumber(user.getPhoneNumber());
+            model.addAttribute("user", updateClientDTO);
             return "myAccount";
         } else {
             return "redirect:/login";
@@ -56,13 +58,12 @@ public class ClientAccountController {
                                  RedirectAttributes redirectAttributes) {
         User user = sessionData.getUser();
         if (user != null) {
-            clientService.updateUserData(user.getId(), updateClientDTO.getFirstName(),
+            clientService.updateUserData(user.getId(),
+                          updateClientDTO.getLogin(),
+                          updateClientDTO.getFirstName(),
                           updateClientDTO.getLastName(),
                           updateClientDTO.getPhoneNumber(),
                           LocalDateTime.now());
-            updateClientDTO.setFirstName("");
-            updateClientDTO.setLastName("");
-            updateClientDTO.setPhoneNumber("");
             redirectAttributes.addFlashAttribute("correctSave", "Dane zostały poprawnie zmienione");
         } else {
             return "redirect:/login";

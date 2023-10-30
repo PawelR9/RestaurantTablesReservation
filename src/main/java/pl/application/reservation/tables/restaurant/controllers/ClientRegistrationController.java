@@ -8,9 +8,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import pl.application.reservation.tables.restaurant.exceptions.UserAlreadyExistException;
 import pl.application.reservation.tables.restaurant.model.dto.ClientRegistrationDTO;
 import pl.application.reservation.tables.restaurant.services.ClientService;
+
+import java.sql.SQLIntegrityConstraintViolationException;
 
 @Controller
 @RequestMapping(path = "/clientRegistrationForm")
@@ -28,7 +29,7 @@ public class ClientRegistrationController {
         String error = (String) model.getAttribute("error");
         ClientRegistrationDTO clientRegistrationDTOModel = (ClientRegistrationDTO) model.getAttribute("model");
         model.addAttribute("client", clientRegistrationDTOModel == null ? clientRegistrationDTO : clientRegistrationDTOModel);
-        if(error != null && !error.isEmpty()){
+        if (error != null && !error.isEmpty()) {
             model.addAttribute("errorMessage", error);
         }
         return "clientRegistrationForm";
@@ -40,8 +41,14 @@ public class ClientRegistrationController {
             clientService.registerClient(clientRegistrationDTO);
             redirectAttributes.addFlashAttribute("correctRegistration", "Rejestracja przebieg³a pomyœlnie. Mo¿esz spróbowaæ siê zalogowaæ.");
             return "redirect:/login";
-        } catch (UserAlreadyExistException e) {
-            redirectAttributes.addFlashAttribute("error", "Istnieje ju¿ konto o podanym adresie email.");
+        } catch (SQLIntegrityConstraintViolationException e) {
+            String message = e.getMessage();
+            if (message.contains("o podanym adresie email.")) {
+                redirectAttributes.addFlashAttribute("emailError", "Istnieje ju¿ konto o podanym adresie email.");
+            } else if (message.contains("o podanym loginie.")) {
+                redirectAttributes.addFlashAttribute("loginError", "Istnieje ju¿ konto o podanym loginie.");
+            }
+
             redirectAttributes.addFlashAttribute("model", clientRegistrationDTO);
             return "redirect:/clientRegistrationForm";
         }

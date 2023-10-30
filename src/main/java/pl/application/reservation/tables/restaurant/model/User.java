@@ -18,22 +18,24 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String first_name;
-    private String last_name;
-    @Column(unique = true)
-    private String email;
-    @JsonIgnore
-    private String password;
     @Enumerated(EnumType.STRING)
     private Role role;
-    private String phone_number;
-    private LocalDateTime created_at;
-    private LocalDateTime updated_at;
+    @Column(unique = true)
+    private String login;
+    private String firstName;
+    private String lastName;
+    @Column(unique = true)
+    private String email;
+    private String phoneNumber;
+    @JsonIgnore
+    private String password;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
 
     public enum Role {
         ADMIN,
-        CUSTOMER,
+        CLIENT,
         RESTAURANT_OWNER,
     }
 }

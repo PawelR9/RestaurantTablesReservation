@@ -23,6 +23,12 @@
             <div id="info"></div>
 
             <div class="form-group">
+                <label for="login">Login:</label>
+                <input type="text" id="login" name="login" th:field="*{login}" required>
+                <div th:if="${loginError}" th:text="${loginError}">loginError</div>
+            </div>
+
+            <div class="form-group">
                 <label for="firstName">Imię:</label>
                 <input type="text" id="firstName" name="firstName" th:field="*{firstName}" required>
             </div>
@@ -35,12 +41,12 @@
             <div class="form-group">
                 <label for="email">Email:</label>
                 <input type="email" id="email" name="email" th:field="*{email}" required>
-                <div th:if="${errorMessage}" th:text="${errorMessage}">Error</div>
+                <div th:if="${emailError}" th:text="${emailError}">emailError</div>
             </div>
 
             <div class="form-group">
                 <label for="phone">Nr telefonu:</label>
-                <input type="tel" id="phone" name="phone" th:field="*{phone}" required>
+                <input type="tel" id="phone" name="phone" th:field="*{phoneNumber}" required>
             </div>
 
             <div class="form-group">

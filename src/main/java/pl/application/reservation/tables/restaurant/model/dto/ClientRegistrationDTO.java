@@ -7,12 +7,14 @@ import pl.application.reservation.tables.restaurant.model.User;
 @Getter
 @Setter
 public class ClientRegistrationDTO {
+    private String emailOrLogin;
+    private String login;
     private String firstName;
     private String lastName;
     private String email;
-    private String phone;
+    private String phoneNumber;
     private String password;
-    private User.Role role = User.Role.CUSTOMER;
+    private User.Role role = User.Role.CLIENT;
 
 }
 

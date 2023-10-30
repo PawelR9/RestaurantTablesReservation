@@ -6,7 +6,7 @@
 </head>
 <div class="logout" id="logout" th:fragment="logout">
     <div th:if="${logged}">
-        <p>Zalogowano jako <span th:text="${user.first_name}"></span></p>
+        <p>Zalogowano jako <span th:text="${user.firstName}"></span></p>
         <div class="buttony">
         <form th:action="@{/logout}" method="get">
             <button type="submit" class="button">Wyloguj</button>

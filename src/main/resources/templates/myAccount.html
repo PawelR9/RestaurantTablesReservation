@@ -12,11 +12,15 @@
 <body>
 <div class="container">
 <h1>Moje Konto</h1>
-<form th:action="@{/konto}" method="post" th:object="${client}"  onsubmit="return validate()" autocomplete="off">
+<form th:action="@{/konto}" method="post" th:object="${user}"  onsubmit="return validate()">
 
     <div id="info"></div>
 
     <div th:if="${correctSave}" th:text="${correctSave}">correctSave</div>
+    <div class="form-group">
+        <label for="login">Login:</label>
+        <input type="text" id="login" name="login" th:value="*{login}" required>
+    </div>
     <div class="form-group">
         <label for="firstName">Imię:</label>
         <input type="text" id="firstName" name="firstName" th:value="*{firstName}" required>

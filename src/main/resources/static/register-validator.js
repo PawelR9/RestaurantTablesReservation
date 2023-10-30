@@ -1,4 +1,5 @@
  function validate() {
+    var login = document.getElementById("login");
     var firstName = document.getElementById("firstName");
     var lastName = document.getElementById("lastName");
     var email = document.getElementById("email");
@@ -8,11 +9,20 @@
     var infoResult = "";
     var result = true;
 
+    var loginRegex = /^[A-Za-z0-9_]+$/;
     var firstNameRegex = /^[A-ZĄĆĘŁŃÓŚŹŻ][a-ząćęłńóśźż]+$/;
     var lastNameRegex = /^[A-ZĄĆĘŁŃÓŚŹŻ][a-ząćęłńóśźż]+([ -][A-ZĄĆĘŁŃÓŚŹŻ][a-ząćęłńóśźż]+)?$/;
     var emailRegex = /^[\w\.-]+@[\w\.-]+\.[A-Za-z0-9]{2,3}$/;
     var phoneRegex = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{3,6}$/;
     var passwordRegex = /^.{5,}$/;
+
+    if(!loginRegex.test(login.value)) {
+            infoResult = infoResult + "Zły login <br>";
+            login.style.background = "#fcc2c2";
+            result = false;
+        } else {
+            login.style.background = "#d9ead3";
+        }
 
     if(!firstNameRegex.test(firstName.value)) {
             infoResult = infoResult + "Złe imię <br>";
