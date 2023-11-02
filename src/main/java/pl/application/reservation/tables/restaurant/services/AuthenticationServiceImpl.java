@@ -35,6 +35,14 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
     }
 
     @Override
+    public void authenticatePassword(String password) {
+        User user = sessionData.getUser();
+        if (user != null && user.getPassword().equals(DigestUtils.md5Hex(password))) {
+            user.setPassword(null);
+        }
+    }
+
+    @Override
     public void logout(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
         if (session != null) {

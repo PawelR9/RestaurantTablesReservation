@@ -14,18 +14,18 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
-public class ClientService implements IClientService {
+public class UserService implements IUserService {
 
     private final IUserRepository userRepository;
 
     @Autowired
-    public ClientService(IUserRepository userRepository) {
+    public UserService(IUserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
     @Override
     @Transactional
-    public void registerClient(ClientRegistrationDTO clientRegistrationDTO) throws  UserWithThisEmailAlreadyExistException, UserWithThisLoginAlreadyExistException {
+    public void registerClient(ClientRegistrationDTO clientRegistrationDTO) throws UserWithThisEmailAlreadyExistException, UserWithThisLoginAlreadyExistException {
 
         if (userRepository.findByLogin(clientRegistrationDTO.getLogin()).isPresent()) {
             throw new UserWithThisLoginAlreadyExistException();
@@ -50,17 +50,36 @@ public class ClientService implements IClientService {
 
     @Override
     @Transactional
-    public void updateUserData(int userId, String login, String firstName, String lastName, String phoneNumber, LocalDateTime localDateTime) {
+    public void updateUserData(int userId, String login, String firstName, String lastName, String phoneNumber, LocalDateTime localDateTime)
+            throws UserWithThisLoginAlreadyExistException {
         Optional<User> userOptional = userRepository.findById(userId);
 
         if (userOptional.isPresent()) {
             User user = userOptional.get();
+
+            if (userRepository.findByLogin(login).isPresent()) {
+                throw new UserWithThisLoginAlreadyExistException();
+            }
             user.setLogin(login);
             user.setFirstName(firstName);
             user.setLastName(lastName);
             user.setPhoneNumber(phoneNumber);
             user.setUpdatedAt(LocalDateTime.now());
 
+            userRepository.save(user);
+        }
+    }
+
+    public void changeEmail(int userId, String newEmail, LocalDateTime localDateTime)
+            throws UserWithThisEmailAlreadyExistException {
+        Optional<User> userOptional = userRepository.findById(userId);
+
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            if (userRepository.findByEmail(newEmail).isPresent()) {
+                throw new UserWithThisEmailAlreadyExistException();
+            }
+            user.setEmail(newEmail);
             userRepository.save(user);
         }
     }

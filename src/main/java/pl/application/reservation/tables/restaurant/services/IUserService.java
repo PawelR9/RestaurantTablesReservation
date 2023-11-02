@@ -6,9 +6,10 @@ import pl.application.reservation.tables.restaurant.model.dto.ClientRegistration
 
 import java.time.LocalDateTime;
 
-public interface IClientService {
+public interface IUserService {
 
 
     public void registerClient(ClientRegistrationDTO clientRegistrationDTO) throws UserWithThisEmailAlreadyExistException, UserWithThisLoginAlreadyExistException;
-    public void updateUserData(int userId, String login, String firstName, String lastName, String phoneNumber, LocalDateTime localDateTime);
+    public void updateUserData(int userId, String login, String firstName, String lastName, String phoneNumber, LocalDateTime localDateTime) throws UserWithThisLoginAlreadyExistException;
+    public void changeEmail(int userId, String email, LocalDateTime localDateTime) throws UserWithThisEmailAlreadyExistException;
 }

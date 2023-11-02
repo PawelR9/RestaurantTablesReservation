@@ -9,10 +9,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import pl.application.reservation.tables.restaurant.exceptions.UserWithThisLoginAlreadyExistException;
 import pl.application.reservation.tables.restaurant.model.User;
 import pl.application.reservation.tables.restaurant.model.dto.UpdateClientDTO;
 import pl.application.reservation.tables.restaurant.repository.IUserRepository;
-import pl.application.reservation.tables.restaurant.services.ClientService;
+import pl.application.reservation.tables.restaurant.services.UserService;
 import pl.application.reservation.tables.restaurant.session.SessionData;
 
 import java.time.LocalDateTime;
@@ -27,11 +28,11 @@ public class ClientAccountController {
     @Resource
     SessionData sessionData;
 
-    private final ClientService clientService;
+    private final UserService userService;
 
     @Autowired
-    public ClientAccountController(ClientService clientService) {
-        this.clientService = clientService;
+    public ClientAccountController(UserService userService) {
+        this.userService = userService;
     }
 
     @GetMapping
@@ -55,18 +56,22 @@ public class ClientAccountController {
 
     @PostMapping()
     public String updateUserData(@ModelAttribute UpdateClientDTO updateClientDTO,
-                                 RedirectAttributes redirectAttributes) {
+                                 RedirectAttributes redirectAttributes) throws UserWithThisLoginAlreadyExistException {
         User user = sessionData.getUser();
-        if (user != null) {
-            clientService.updateUserData(user.getId(),
-                          updateClientDTO.getLogin(),
-                          updateClientDTO.getFirstName(),
-                          updateClientDTO.getLastName(),
-                          updateClientDTO.getPhoneNumber(),
-                          LocalDateTime.now());
-            redirectAttributes.addFlashAttribute("correctSave", "Dane zostały poprawnie zmienione");
-        } else {
-            return "redirect:/login";
+        try {
+            if (user != null) {
+                userService.updateUserData(user.getId(),
+                        updateClientDTO.getLogin(),
+                        updateClientDTO.getFirstName(),
+                        updateClientDTO.getLastName(),
+                        updateClientDTO.getPhoneNumber(),
+                        LocalDateTime.now());
+                redirectAttributes.addFlashAttribute("correctSave", "Dane zostały poprawnie zmienione");
+            } else {
+                return "redirect:/login";
+            }
+        } catch (UserWithThisLoginAlreadyExistException e) {
+            redirectAttributes.addFlashAttribute("loginError", "Istnieje już konto o podanym loginie.");
         }
         return "redirect:/konto";
     }

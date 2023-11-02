@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.application.reservation.tables.restaurant.model.dto.ClientRegistrationDTO;
-import pl.application.reservation.tables.restaurant.services.ClientService;
+import pl.application.reservation.tables.restaurant.services.UserService;
 
 import java.sql.SQLIntegrityConstraintViolationException;
 
@@ -17,11 +17,11 @@ import java.sql.SQLIntegrityConstraintViolationException;
 @RequestMapping(path = "/clientRegistrationForm")
 public class ClientRegistrationController {
 
-    private final ClientService clientService;
+    private final UserService userService;
 
     @Autowired
-    public ClientRegistrationController(ClientService clientService) {
-        this.clientService = clientService;
+    public ClientRegistrationController(UserService userService) {
+        this.userService = userService;
     }
 
     @GetMapping()
@@ -38,7 +38,7 @@ public class ClientRegistrationController {
     @PostMapping("/registerClient")
     public String registerClient(ClientRegistrationDTO clientRegistrationDTO, RedirectAttributes redirectAttributes) {
         try {
-            clientService.registerClient(clientRegistrationDTO);
+            userService.registerClient(clientRegistrationDTO);
             redirectAttributes.addFlashAttribute("correctRegistration", "Rejestracja przebieg³a pomyœlnie. Mo¿esz spróbowaæ siê zalogowaæ.");
             return "redirect:/login";
         } catch (SQLIntegrityConstraintViolationException e) {

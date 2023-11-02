@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moje konto</title>
+    <link rel="stylesheet" type="text/css" href="common.css">
+    <link rel="stylesheet" type="text/css" href="clientForm.css">
+    <script src="/updateClient-validator.js"></script>
+</head>
+
+<body>
+<div class="container">
+    <h1>Moje Konto</h1>
+    <form th:action="@{/konto}" method="post" th:object="${user}" onsubmit="return validate()">
+        <div id="info"></div>
+
+        <div th:if="${correctSave}" th:text="${correctSave}">correctSave</div>
+        <div class="form-group">
+            <label for="login">Login:</label>
+            <input type="text" id="login" name="login" th:value="*{login}" required>
+            <div th:if="${loginError}" th:text="${loginError}">loginError</div>
+        </div>
+        <div class="form-group">
+            <label for="firstName">Imię:</label>
+            <input type="text" id="firstName" name="firstName" th:value="*{firstName}" required>
+        </div>
+        <div class="form-group">
+            <label for="lastName">Nazwisko:</label>
+            <input type="text" id="lastName" name="lastName" th:value="*{lastName}" required>
+        </div>
+        <div class="form-group">
+            <label for="emailReadonly">Adres email:</label>
+            <input type="email" id="emailReadonly" name="emailReadonly" th:value="*{email}" readonly>
+        </div>
+        <div class="form-group">
+            <label for="phoneNumber">Numer telefonu:</label>
+            <input type="text" id="phoneNumber" name="phoneNumber" th:value="*{phoneNumber}">
+        </div>
+        <button type="submit" id="saveChangesButton" name="saveChanges">Zapisz zmiany</button><br>
+    </form>
+
+    <form th:action="@{/changeEmail}" method="get">
+        <button type="submit" id="changeEmail" name="changeEmail">Zmień adres email</button>
+    </form>
+
+    <form th:action="@{/changePassword}" method="get">
+        <button type="submit" id="changePassword" name="changePassword">Zmień hasło</button>
+    </form>
+
+</div>
+<footer>
+    <p>&copy; 2023 Rezerwacja Stolików w Restauracjach</p>
+</footer>
+</body>
+</html>

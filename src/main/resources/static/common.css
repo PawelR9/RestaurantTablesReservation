@@ -36,14 +36,12 @@ img {
     outline: none !important;
 }
 
-/* Stylizacja logo */
 #logo img {
     max-width: 200px;
     height: auto;
     background-color: white;
 }
 
-/* Stylizacja przycisków */
 #buttons a {
     display: inline-block;
     margin: 10px;
@@ -56,4 +54,9 @@ img {
 
 #buttons a:hover {
     background-color: #0056b3;
+}
+
+#changeEmail:hover {
+    background-color: #444a52;
+    color: white;
 }
