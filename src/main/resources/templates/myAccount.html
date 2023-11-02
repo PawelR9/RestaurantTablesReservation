@@ -12,7 +12,7 @@
 <body>
 <div class="container">
 <h1>Moje Konto</h1>
-<form th:object="${user}"  onsubmit="return validate()">
+<form th:action="@{/konto}" method="post" th:object="${user}" onsubmit="return validate()">
 
     <div id="info"></div>
 
@@ -33,14 +33,14 @@
     <div class="form-group">
         <label for="emailReadonly">Adres email:</label>
         <input type="email" id="emailReadonly" name="emailReadonly" th:value="*{email}" readonly>
-        <button type="submit" name="changeEmailButton" id="changeEmail" method="get" th:action="@{/changeEmail}">Zmień adres email</button>
+        <a th:href="@{/changeEmail}" id="changeEmail" class="my-button">Zmień adres email</a>
     </div>
     <div class="form-group">
         <label for="phoneNumber">Numer telefonu:</label>
         <input type="text" id="phoneNumber" name="phoneNumber" th:value="*{phoneNumber}">
     </div>
     <button type="submit" id="saveChangesButton">Zapisz zmiany</button><br>
-    <button type="submit" id="changePasswordButton">Zmień hasło</button>
+    <a th:href="@{/main}" id="changePasswordButton" class="my-button-red">Zmień hasło</a>
 
 </form>
 <footer>
