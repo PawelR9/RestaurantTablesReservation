@@ -55,8 +55,8 @@ public class ClientAccountController {
     }
 
     @PostMapping()
-    public String updateUserData(@ModelAttribute UpdateClientDTO updateClientDTO,
-                                 RedirectAttributes redirectAttributes) throws UserWithThisLoginAlreadyExistException {
+    public String updateUserData(@ModelAttribute UpdateClientDTO updateClientDTO, RedirectAttributes redirectAttributes)
+            throws UserWithThisLoginAlreadyExistException {
         User user = sessionData.getUser();
         try {
             if (user != null) {

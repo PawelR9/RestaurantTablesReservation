@@ -21,7 +21,7 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
     SessionData sessionData;
 
     @Override
-    public void authenticate(String loginOrEmail, String password) {
+    public boolean authenticate(String loginOrEmail, String password) {
         Optional<User> userBox;
         if (loginOrEmail.contains("@")) {
             userBox = this.userRepository.findByEmail(loginOrEmail.toLowerCase());
@@ -31,16 +31,12 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
         if (userBox.isPresent() && userBox.get().getPassword().equals(DigestUtils.md5Hex(password))) {
             userBox.get().setPassword(null);
             this.sessionData.setUser(userBox.get());
+            return true;
+        }else {
+            return false;
         }
     }
 
-    @Override
-    public void authenticatePassword(String password) {
-        User user = sessionData.getUser();
-        if (user != null && user.getPassword().equals(DigestUtils.md5Hex(password))) {
-            user.setPassword(null);
-        }
-    }
 
     @Override
     public void logout(HttpServletRequest request) {

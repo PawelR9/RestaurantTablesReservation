@@ -70,6 +70,8 @@ public class UserService implements IUserService {
         }
     }
 
+    @Override
+    @Transactional
     public void changeEmail(int userId, String newEmail, LocalDateTime localDateTime)
             throws UserWithThisEmailAlreadyExistException {
         Optional<User> userOptional = userRepository.findById(userId);
@@ -80,6 +82,7 @@ public class UserService implements IUserService {
                 throw new UserWithThisEmailAlreadyExistException();
             }
             user.setEmail(newEmail);
+            user.setUpdatedAt(LocalDateTime.now());
             userRepository.save(user);
         }
     }

@@ -12,7 +12,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.application.reservation.tables.restaurant.exceptions.UserWithThisEmailAlreadyExistException;
 import pl.application.reservation.tables.restaurant.model.User;
 import pl.application.reservation.tables.restaurant.model.dto.ChangeEmailDTO;
-import pl.application.reservation.tables.restaurant.model.dto.UpdateClientDTO;
 import pl.application.reservation.tables.restaurant.services.AuthenticationServiceImpl;
 import pl.application.reservation.tables.restaurant.services.UserService;
 import pl.application.reservation.tables.restaurant.session.SessionData;
@@ -40,17 +39,55 @@ public class EmailController {
         }
     }
 
-    @PostMapping
-    public String changeEmail(@ModelAttribute ChangeEmailDTO changeEmailDTO, RedirectAttributes redirectAttributes)
+    /*@PostMapping
+    public String changeEmail(@ModelAttribute("user") ChangeEmailDTO changeEmailDTO, RedirectAttributes redirectAttributes, Model model)
             throws UserWithThisEmailAlreadyExistException {
+        ChangeEmailDTO changeEmailDTOModel = (ChangeEmailDTO) model.getAttribute("user");
+        model.addAttribute("user", changeEmailDTOModel == null ? changeEmailDTO : changeEmailDTOModel);
         try {
-            authenticationService.authenticatePassword(changeEmailDTO.getPassword());
             User user = sessionData.getUser();
             if (user != null) {
-                userService.changeEmail(user.getId(),
-                        changeEmailDTO.getEmail(),
-                        LocalDateTime.now());
-                redirectAttributes.addFlashAttribute("correctSave", "Email został poprawnie zmieniony");
+                if (authenticationService.authenticate(user.getLogin(), changeEmailDTO.getPassword())) {
+                    if(changeEmailDTO.getEmail().equals(user.getEmail())) {
+                        redirectAttributes.addFlashAttribute("emailUnchanged", "Adres email pozostał bez zmian");
+                    } else {
+                        userService.changeEmail(user.getId(),
+                                                changeEmailDTO.getEmail(),
+                                                 LocalDateTime.now());
+                        redirectAttributes.addFlashAttribute("emailChanged", "Adres email został pomyślnie zmieniony");
+                    }
+                } else {
+                    redirectAttributes.addFlashAttribute("passwordError", "Błędne hasło");
+                }
+
+            } else {
+                return "redirect:/login";
+            }
+        } catch (UserWithThisEmailAlreadyExistException e) {
+            redirectAttributes.addFlashAttribute("emailError", "Istnieje już konto o podanym adresie email");
+        }
+        return "redirect:/changeEmail";
+    }*/
+    @PostMapping
+    public String changeEmail(@ModelAttribute("user") ChangeEmailDTO changeEmailDTO, RedirectAttributes redirectAttributes, Model model)
+            throws UserWithThisEmailAlreadyExistException {
+        ChangeEmailDTO changeEmailDTOModel = (ChangeEmailDTO) model.getAttribute("user");
+        model.addAttribute("user", changeEmailDTOModel == null ? changeEmailDTO : changeEmailDTOModel);
+        try {
+            User user = sessionData.getUser();
+            if (user != null) {
+                if (authenticationService.authenticate(user.getLogin(), changeEmailDTO.getPassword())) {
+                    if (changeEmailDTO.getEmail().equals(user.getEmail())) {
+                        redirectAttributes.addFlashAttribute("emailUnchanged", "Adres email pozostał bez zmian");
+                    } else {
+                        userService.changeEmail(user.getId(),
+                                changeEmailDTO.getEmail(),
+                                LocalDateTime.now());
+                        redirectAttributes.addFlashAttribute("emailChanged", "Adres email został pomyślnie zmieniony");
+                    }
+                } else {
+                    redirectAttributes.addFlashAttribute("passwordError", "Błędne hasło");
+                }
             } else {
                 return "redirect:/login";
             }
