@@ -5,11 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Zmień Adres Email</title>
     <link rel="stylesheet" type="text/css" href="common.css">
+    <script src="/changeEmail-validator.js"></script>
 </head>
 <body>
 <div class="container">
     <h1>Zmień adres email</h1>
-    <form th:action="@{/changeEmail}" method="post" th:object="${user}">
+    <div id="info"></div>
+    <form th:action="@{/changeEmail}" method="post" th:object="${user}" onsubmit="return validate()">
         <div th:if="${emailChanged}" th:text="${emailChanged}">emailChanged</div>
         <div th:if="${emailUnchanged}" th:text="${emailUnchanged}">emailUnchanged</div>
         <div th:if="${passwordError}" th:text="${passwordError}">passwordError</div>
@@ -20,7 +22,7 @@
         </div>
         <div class="form-group">
             <label for="confirmEmail">Powtórz email:</label>
-            <input type="email" id="confirmEmail"  required>
+            <input type="email" id="confirmEmail" th:field="*{confirmedEmail}"  required>
         </div>
         <div class="form-group">
             <label for="password">Podaj hasło:</label>

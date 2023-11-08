@@ -6,6 +6,8 @@ public interface IAuthenticationService {
 
     boolean authenticate(String loginOrEmail, String password);
 
+    boolean authenticatePassword(String email, String password);
+
     void logout(HttpServletRequest request);
 
 }

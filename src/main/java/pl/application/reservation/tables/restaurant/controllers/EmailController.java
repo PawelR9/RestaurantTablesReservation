@@ -30,8 +30,14 @@ public class EmailController {
     private final AuthenticationServiceImpl authenticationService;
 
     @GetMapping
-    public String showChangeEmailForm() {
+    public String showChangeEmailForm(@ModelAttribute("user") ChangeEmailDTO changeEmailDTO, Model model) {
+        String error = (String) model.getAttribute("error");
+        ChangeEmailDTO changeEmailDTOModel = (ChangeEmailDTO) model.getAttribute("model");
+        model.addAttribute("user", changeEmailDTOModel == null ? changeEmailDTO : changeEmailDTOModel);
         User user = sessionData.getUser();
+        if(error != null && !error.isEmpty()) {
+            model.addAttribute("errorMessage", error);
+        }
         if (user != null) {
             return "changeEmail";
         } else {
@@ -39,44 +45,13 @@ public class EmailController {
         }
     }
 
-    /*@PostMapping
-    public String changeEmail(@ModelAttribute("user") ChangeEmailDTO changeEmailDTO, RedirectAttributes redirectAttributes, Model model)
-            throws UserWithThisEmailAlreadyExistException {
-        ChangeEmailDTO changeEmailDTOModel = (ChangeEmailDTO) model.getAttribute("user");
-        model.addAttribute("user", changeEmailDTOModel == null ? changeEmailDTO : changeEmailDTOModel);
-        try {
-            User user = sessionData.getUser();
-            if (user != null) {
-                if (authenticationService.authenticate(user.getLogin(), changeEmailDTO.getPassword())) {
-                    if(changeEmailDTO.getEmail().equals(user.getEmail())) {
-                        redirectAttributes.addFlashAttribute("emailUnchanged", "Adres email pozostał bez zmian");
-                    } else {
-                        userService.changeEmail(user.getId(),
-                                                changeEmailDTO.getEmail(),
-                                                 LocalDateTime.now());
-                        redirectAttributes.addFlashAttribute("emailChanged", "Adres email został pomyślnie zmieniony");
-                    }
-                } else {
-                    redirectAttributes.addFlashAttribute("passwordError", "Błędne hasło");
-                }
-
-            } else {
-                return "redirect:/login";
-            }
-        } catch (UserWithThisEmailAlreadyExistException e) {
-            redirectAttributes.addFlashAttribute("emailError", "Istnieje już konto o podanym adresie email");
-        }
-        return "redirect:/changeEmail";
-    }*/
     @PostMapping
     public String changeEmail(@ModelAttribute("user") ChangeEmailDTO changeEmailDTO, RedirectAttributes redirectAttributes, Model model)
             throws UserWithThisEmailAlreadyExistException {
-        ChangeEmailDTO changeEmailDTOModel = (ChangeEmailDTO) model.getAttribute("user");
-        model.addAttribute("user", changeEmailDTOModel == null ? changeEmailDTO : changeEmailDTOModel);
+        User user = sessionData.getUser();
         try {
-            User user = sessionData.getUser();
             if (user != null) {
-                if (authenticationService.authenticate(user.getLogin(), changeEmailDTO.getPassword())) {
+                if (authenticationService.authenticatePassword(user.getEmail(), changeEmailDTO.getPassword())) {
                     if (changeEmailDTO.getEmail().equals(user.getEmail())) {
                         redirectAttributes.addFlashAttribute("emailUnchanged", "Adres email pozostał bez zmian");
                     } else {
@@ -94,6 +69,7 @@ public class EmailController {
         } catch (UserWithThisEmailAlreadyExistException e) {
             redirectAttributes.addFlashAttribute("emailError", "Istnieje już konto o podanym adresie email");
         }
+        redirectAttributes.addFlashAttribute("model",changeEmailDTO);
         return "redirect:/changeEmail";
     }
 

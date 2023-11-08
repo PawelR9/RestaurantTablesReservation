@@ -37,6 +37,18 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
         }
     }
 
+    @Override
+    public boolean authenticatePassword(String email, String password) {
+        Optional<User> userBox;
+        userBox = this.userRepository.findByEmail(email.toLowerCase());
+        if(userBox.isPresent() && userBox.get().getPassword().equals(DigestUtils.md5Hex(password))) {
+            this.sessionData.setUser(userBox.get());
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 
     @Override
     public void logout(HttpServletRequest request) {
