@@ -1,6 +1,6 @@
  function validate() {
-    var password = document.getElementById("password");
-    var password2 = document.getElementById("password2");
+    var password = document.getElementById("newPassword");
+    var password2 = document.getElementById("confirmedPassword");
     var infoResult = "";
     var result = true;
 

@@ -7,7 +7,10 @@ import org.springframework.transaction.annotation.Transactional;
 import pl.application.reservation.tables.restaurant.exceptions.UserWithThisEmailAlreadyExistException;
 import pl.application.reservation.tables.restaurant.exceptions.UserWithThisLoginAlreadyExistException;
 import pl.application.reservation.tables.restaurant.model.User;
+import pl.application.reservation.tables.restaurant.model.dto.ChangeEmailDTO;
+import pl.application.reservation.tables.restaurant.model.dto.ChangePasswordDTO;
 import pl.application.reservation.tables.restaurant.model.dto.ClientRegistrationDTO;
+import pl.application.reservation.tables.restaurant.model.dto.UpdateClientDTO;
 import pl.application.reservation.tables.restaurant.repository.IUserRepository;
 
 import java.time.LocalDateTime;
@@ -50,38 +53,63 @@ public class UserService implements IUserService {
 
     @Override
     @Transactional
-    public void updateUserData(int userId, String login, String firstName, String lastName, String phoneNumber, LocalDateTime localDateTime)
+    public boolean updateUserData(int userId, UpdateClientDTO updateClientDTO)
             throws UserWithThisLoginAlreadyExistException {
         Optional<User> userOptional = userRepository.findById(userId);
 
         if (userOptional.isPresent()) {
             User user = userOptional.get();
 
-            if (userRepository.findByLogin(login).isPresent()) {
-                throw new UserWithThisLoginAlreadyExistException();
-            }
-            user.setLogin(login);
-            user.setFirstName(firstName);
-            user.setLastName(lastName);
-            user.setPhoneNumber(phoneNumber);
-            user.setUpdatedAt(LocalDateTime.now());
+            String newLogin = updateClientDTO.getLogin();
 
+            if (!newLogin.equals(user.getLogin())) {
+                if (userRepository.findByLogin(newLogin).isPresent()) {
+                    throw new UserWithThisLoginAlreadyExistException();
+                }
+                user.setLogin(updateClientDTO.getLogin());
+            }
+            boolean dataChanged = !newLogin.equals(user.getLogin())
+                    || !updateClientDTO.getFirstName().equals(user.getFirstName())
+                    || !updateClientDTO.getLastName().equals(user.getLastName())
+                    || !updateClientDTO.getPhoneNumber().equals(user.getPhoneNumber());
+
+            if (dataChanged) {
+                user.setFirstName(updateClientDTO.getFirstName());
+                user.setLastName(updateClientDTO.getLastName());
+                user.setPhoneNumber(updateClientDTO.getPhoneNumber());
+                user.setUpdatedAt(LocalDateTime.now());
+
+                userRepository.save(user);
+            }
+            return dataChanged;
+        } return false;
+    }
+
+    @Override
+    @Transactional
+    public void changeEmail(int userId, ChangeEmailDTO changeEmailDTO)
+            throws UserWithThisEmailAlreadyExistException {
+        Optional<User> userOptional = userRepository.findById(userId);
+
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            if (userRepository.findByEmail(changeEmailDTO.getEmail()).isPresent()) {
+                throw new UserWithThisEmailAlreadyExistException();
+            }
+            user.setEmail(changeEmailDTO.getEmail());
+            user.setUpdatedAt(LocalDateTime.now());
             userRepository.save(user);
         }
     }
 
     @Override
     @Transactional
-    public void changeEmail(int userId, String newEmail, LocalDateTime localDateTime)
-            throws UserWithThisEmailAlreadyExistException {
+    public void changePassword(int userId, ChangePasswordDTO changePasswordDTO) {
         Optional<User> userOptional = userRepository.findById(userId);
 
         if (userOptional.isPresent()) {
             User user = userOptional.get();
-            if (userRepository.findByEmail(newEmail).isPresent()) {
-                throw new UserWithThisEmailAlreadyExistException();
-            }
-            user.setEmail(newEmail);
+            user.setPassword(DigestUtils.md5Hex(changePasswordDTO.getNewPassword()));
             user.setUpdatedAt(LocalDateTime.now());
             userRepository.save(user);
         }

@@ -60,18 +60,16 @@ public class ClientAccountController {
         User user = sessionData.getUser();
         try {
             if (user != null) {
-                userService.updateUserData(user.getId(),
-                        updateClientDTO.getLogin(),
-                        updateClientDTO.getFirstName(),
-                        updateClientDTO.getLastName(),
-                        updateClientDTO.getPhoneNumber(),
-                        LocalDateTime.now());
-                redirectAttributes.addFlashAttribute("correctSave", "Dane zostały poprawnie zmienione");
+                boolean dataChanged = userService.updateUserData(user.getId(),
+                        updateClientDTO);
+                if (dataChanged) {
+                    redirectAttributes.addFlashAttribute("correctSave", "Dane zostały poprawnie zmienione");
+                }
             } else {
                 return "redirect:/login";
             }
         } catch (UserWithThisLoginAlreadyExistException e) {
-            redirectAttributes.addFlashAttribute("loginError", "Istnieje już konto o podanym loginie.");
+            redirectAttributes.addFlashAttribute("loginError", "Istnieje już konto o loginie:" + updateClientDTO.getLogin());
         }
         return "redirect:/konto";
     }

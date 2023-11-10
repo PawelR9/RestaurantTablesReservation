@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import pl.application.reservation.tables.restaurant.exceptions.UserValidationException;
 import pl.application.reservation.tables.restaurant.services.IAuthenticationService;
 import pl.application.reservation.tables.restaurant.session.SessionData;
 
@@ -33,14 +32,12 @@ public class AuthenticationController {
     public String login(@RequestParam String email,
                         @RequestParam String password,
                         RedirectAttributes redirectAttributes) {
-        try {
+
             this.authenticationService.authenticate(email, password);
             if (sessionData.isLogged()) {
                 redirectAttributes.addFlashAttribute("correctLogIn", "Zostałeś poprawnie zalogowany");
                 return "redirect:/main";
             }
-        } catch (UserValidationException e) {
-        }
         redirectAttributes.addFlashAttribute("error", "Niepoprawny login lub hasło");
         return "redirect:/login";
     }
