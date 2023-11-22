@@ -7,10 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import pl.application.reservation.tables.restaurant.exceptions.UserWithThisEmailAlreadyExistException;
 import pl.application.reservation.tables.restaurant.exceptions.UserWithThisLoginAlreadyExistException;
 import pl.application.reservation.tables.restaurant.model.User;
-import pl.application.reservation.tables.restaurant.model.dto.ChangeEmailDTO;
-import pl.application.reservation.tables.restaurant.model.dto.ChangePasswordDTO;
-import pl.application.reservation.tables.restaurant.model.dto.ClientRegistrationDTO;
-import pl.application.reservation.tables.restaurant.model.dto.UpdateClientDTO;
+import pl.application.reservation.tables.restaurant.model.dto.*;
 import pl.application.reservation.tables.restaurant.repository.IUserRepository;
 
 import java.time.LocalDateTime;
@@ -46,6 +43,30 @@ public class UserService implements IUserService {
         user.setEmail(clientRegistrationDTO.getEmail().toLowerCase());
         user.setPhoneNumber(clientRegistrationDTO.getPhoneNumber());
         user.setPassword(DigestUtils.md5Hex(clientRegistrationDTO.getPassword()));
+        user.setCreatedAt(LocalDateTime.now());
+
+        userRepository.save(user);
+    }
+
+    @Override
+    @Transactional
+    public void registerRestaurant(RestaurantRegistrationDTO restaurantRegistrationDTO) throws UserWithThisEmailAlreadyExistException, UserWithThisLoginAlreadyExistException {
+        if (userRepository.findByLogin(restaurantRegistrationDTO.getLogin()).isPresent()) {
+            throw new UserWithThisLoginAlreadyExistException();
+        }
+
+        if (userRepository.findByEmail(restaurantRegistrationDTO.getEmail()).isPresent()) {
+            throw new UserWithThisEmailAlreadyExistException();
+        }
+
+        User user = new User();
+        user.setRole(restaurantRegistrationDTO.getRole());
+        user.setLogin(restaurantRegistrationDTO.getLogin());
+        user.setFirstName(restaurantRegistrationDTO.getFirstName());
+        user.setLastName(restaurantRegistrationDTO.getLastName());
+        user.setEmail(restaurantRegistrationDTO.getEmail().toLowerCase());
+        user.setPhoneNumber(restaurantRegistrationDTO.getPhoneNumber());
+        user.setPassword(DigestUtils.md5Hex(restaurantRegistrationDTO.getPassword()));
         user.setCreatedAt(LocalDateTime.now());
 
         userRepository.save(user);

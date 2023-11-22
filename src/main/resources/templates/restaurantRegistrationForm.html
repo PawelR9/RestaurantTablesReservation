@@ -15,45 +15,72 @@
         </div>
     </header>
     <main>
-        <h1>Rejestracja Restauracji</h1>
-        <form action="/register-restaurant" method="post">
+        <h1 class="registration-header">Rejestracja Restauracji</h1>
+        <form th:action="@{/restaurantRegistrationForm/registerRestaurant}" method="post" th:object="${restaurant}">
+
+            <div id="info"></div>
+
             <div class="form-group">
-                <label for="ownerName">Imię i Nazwisko Właściciela:</label>
-                <input type="text" id="ownerName" name="ownerName" required>
+                <label for="login">Login:</label>
+                <input type="text" id="login" name="login" th:field="*{login}" required>
+                <div th:if="${loginError}" th:text="${loginError}">loginError</div>
+            </div>
+
+            <div class="form-group">
+                <label for="firstName">Imię:</label>
+                <input type="text" id="firstName" name="firstName" th:field="*{firstName}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="lastName">Nazwisko:</label>
+                <input type="text" id="lastName" name="lastName" th:field="*{lastName}" required>
             </div>
 
             <div class="form-group">
                 <label for="restaurantName">Nazwa Restauracji:</label>
-                <input type="text" id="restaurantName" name="restaurantName" required>
+                <input type="text" id="restaurantName" name="restaurantName" th:field="*{restaurantName}" required>
             </div>
 
             <div class="form-group">
                 <label for="address">Adres:</label>
-                <input type="text" id="address" name="address" required>
+                <input type="text" id="address" name="address" th:field="*{address}" required>
             </div>
 
             <div class="form-group">
                 <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
+                <input type="email" id="email" name="email" th:field="*{email}" required>
+                <div th:if="${emailError}" th:text="${emailError}">emailError</div>
             </div>
 
             <div class="form-group">
                 <label for="phone">Nr telefonu:</label>
-                <input type="tel" id="phone" name="phone" required>
+                <input type="tel" id="phone" name="phone" th:field="*{phoneNumber}" required>
             </div>
 
-            <!-- Godziny otwarcia -->
             <div class="form-group">
+                <label for="password">Hasło:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password2">Powtórz Hasło:</label>
+                <input type="password" id="password2" name="password2" required>
+            </div>
+
+           <!-- <div class="form-group">
                 <h1>Godziny otwarcia:</h1>
 
                 <div class="opening-hours">
                     <div class="opening-hours-row">
 
                         Poniedziałek:
-                        <input type="text" id="openingHoursMondayFrom" name="openingHoursMondayFrom" placeholder="HH:MM"
+                        <input type="text" id="openingHoursMondayFrom" name="openingHoursMondayFrom"
+                               th:field="*{openingHoursMondayFrom}"
+                               placeholder="HH:MM"
                                required>
                         -
-                        <input type="text" id="openingHoursMondayTo" name="openingHoursMondayTo" placeholder="HH:MM"
+                        <input type="text" id="openingHoursMondayTo" name="openingHoursMondayTo"
+                               th:field="*{openingHoursMondayTo}" placeholder="HH:MM"
                                required>
                         <input type="checkbox" id="openingHoursMondayClosed" name="openingHoursMondayClosed">
                         <label for="openingHoursMondayClosed" class="closed-label">Zamknięte</label>
@@ -61,9 +88,11 @@
                     <div class="opening-hours-row">
                         Wtorek:
                         <input type="text" id="openingHoursTuesdayFrom" name="openingHoursTuesdayFrom"
+                               th:field="*{openingHoursTuesdayFrom}"
                                placeholder="HH:MM" required>
                         -
                         <input type="text" id="openingHoursTuesdayTo" name="openingHoursTuesdayTo" placeholder="HH:MM"
+                               th:field="*{openingHoursTuesdayTo}"
                                required>
                         <input type="checkbox" id="openingHoursTuesdayClosed" name="openingHoursTuesdayClosed">
                         <label for="openingHoursTuesdayClosed" class="closed-label">Zamknięte</label>
@@ -71,9 +100,11 @@
                     <div class="opening-hours-row">
                         Środa:
                         <input type="text" id="openingHoursWednesdayFrom" name="openingHoursWednesdayFrom"
+                               th:field="*{openingHoursWednesdayFrom}"
                                placeholder="HH:MM" required>
                         -
                         <input type="text" id="openingHoursWednesdayTo" name="openingHoursWednesdayTo"
+                               th:field="*{openingHoursWednesdayTo}"
                                placeholder="HH:MM" required>
                         <input type="checkbox" id="openingHoursWednesdayClosed" name="openingHoursWednesdayClosed">
                         <label for="openingHoursWednesdayClosed" class="closed-label">Zamknięte</label>
@@ -81,19 +112,23 @@
                     <div class="opening-hours-row">
                         Czwartek:
                         <input type="text" id="openingHoursThursdayFrom" name="openingHoursThursdayFrom"
+                               th:field="*{openingHoursThursdayFrom}"
                                placeholder="HH:MM" required>
                         -
-                        <input type="text" id="openingHoursThursdayTo" name="openingHoursThursdayTo" placeholder="HH:MM"
+                        <input type="text" id="openingHoursThursdayTo" name="openingHoursThursdayTo"
+                               th:field="*{openingHoursThursdayTo}" placeholder="HH:MM"
                                required>
                         <input type="checkbox" id="openingHoursThursdayClosed" name="openingHoursThursdayClosed">
                         <label for="openingHoursThursdayClosed" class="closed-label">Zamknięte</label>
                     </div>
                     <div class="opening-hours-row">
                         Piątek:
-                        <input type="text" id="openingHoursFridayFrom" name="openingHoursFridayFrom" placeholder="HH:MM"
+                        <input type="text" id="openingHoursFridayFrom" name="openingHoursFridayFrom"
+                               th:field="*{openingHoursFridayFrom}" placeholder="HH:MM"
                                required>
                         -
-                        <input type="text" id="openingHoursFridayTo" name="openingHoursFridayTo" placeholder="HH:MM"
+                        <input type="text" id="openingHoursFridayTo" name="openingHoursFridayTo"
+                               th:field="*{openingHoursFridayTo}" placeholder="HH:MM"
                                required>
                         <input type="checkbox" id="openingHoursFridayClosed" name="openingHoursFridayClosed">
                         <label for="openingHoursFridayClosed" class="closed-label">Zamknięte</label>
@@ -101,25 +136,29 @@
                     <div class="opening-hours-row">
                         Sobota:
                         <input type="text" id="openingHoursSaturdayFrom" name="openingHoursSaturdayFrom"
+                               th:field="*{openingHoursSaturdayFrom}"
                                placeholder="HH:MM" required>
                         -
-                        <input type="text" id="openingHoursSaturdayTo" name="openingHoursSaturdayTo" placeholder="HH:MM"
+                        <input type="text" id="openingHoursSaturdayTo" name="openingHoursSaturdayTo"
+                               th:field="*{openingHoursSaturdayTo}" placeholder="HH:MM"
                                required>
                         <input type="checkbox" id="openingHoursSaturdayClosed" name="openingHoursSaturdayClosed">
                         <label for="openingHoursSaturdayClosed" class="closed-label">Zamknięte</label>
                     </div>
                     <div class="opening-hours-row">
                         Niedziela:
-                        <input type="text" id="openingHoursSundayFrom" name="openingHoursSundayFrom" placeholder="HH:MM"
+                        <input type="text" id="openingHoursSundayFrom" name="openingHoursSundayFrom"
+                               th:field="*{openingHoursSundayFrom}" placeholder="HH:MM"
                                required>
                         -
-                        <input type="text" id="openingHoursSundayTo" name="openingHoursSundayTo" placeholder="HH:MM"
+                        <input type="text" id="openingHoursSundayTo" name="openingHoursSundayTo"
+                               th:field="*{openingHoursSundayTo}" placeholder="HH:MM"
                                required>
                         <input type="checkbox" id="openingHoursSundayClosed" name="openingHoursSundayClosed">
                         <label for="openingHoursSundayClosed" class="closed-label">Zamknięte</label>
                     </div>
                 </div>
-            </div>
+            </div>-->
 
             <button type="submit">Zarejestruj</button>
         </form>

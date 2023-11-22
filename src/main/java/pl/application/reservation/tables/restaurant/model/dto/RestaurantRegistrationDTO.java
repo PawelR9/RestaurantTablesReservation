@@ -2,16 +2,20 @@ package pl.application.reservation.tables.restaurant.model.dto;
 
 import lombok.Getter;
 import lombok.Setter;
+import pl.application.reservation.tables.restaurant.model.User;
 
 @Getter
 @Setter
 public class RestaurantRegistrationDTO {
-    private String ownerName;
+    private String login;
+    private String firstName;
+    private String lastName;
     private String restaurantName;
     private String address;
     private String email;
-    private String phone;
+    private String phoneNumber;
     private String password;
+    private User.Role role = User.Role.RESTAURANT_OWNER;
     private String openingHoursMondayFrom;
     private String openingHoursMondayTo;
     private boolean openingHoursMondayClosed;
