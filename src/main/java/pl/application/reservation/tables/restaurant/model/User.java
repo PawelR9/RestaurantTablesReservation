@@ -16,6 +16,7 @@ import java.time.LocalDateTime;
 @Entity(name = "tusers")
 public class User {
     @Id
+    @OneToOne
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Enumerated(EnumType.STRING)
