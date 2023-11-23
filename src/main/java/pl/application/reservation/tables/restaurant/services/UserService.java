@@ -6,8 +6,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.application.reservation.tables.restaurant.exceptions.UserWithThisEmailAlreadyExistException;
 import pl.application.reservation.tables.restaurant.exceptions.UserWithThisLoginAlreadyExistException;
+import pl.application.reservation.tables.restaurant.model.Restaurant;
 import pl.application.reservation.tables.restaurant.model.User;
 import pl.application.reservation.tables.restaurant.model.dto.*;
+import pl.application.reservation.tables.restaurant.repository.IRestaurantRepository;
 import pl.application.reservation.tables.restaurant.repository.IUserRepository;
 
 import java.time.LocalDateTime;
@@ -17,10 +19,12 @@ import java.util.Optional;
 public class UserService implements IUserService {
 
     private final IUserRepository userRepository;
+    private final IRestaurantRepository restaurantRepository;
 
     @Autowired
-    public UserService(IUserRepository userRepository) {
+    public UserService(IUserRepository userRepository, IRestaurantRepository restaurantRepository) {
         this.userRepository = userRepository;
+        this.restaurantRepository = restaurantRepository;
     }
 
     @Override
@@ -70,6 +74,34 @@ public class UserService implements IUserService {
         user.setCreatedAt(LocalDateTime.now());
 
         userRepository.save(user);
+
+        Restaurant restaurant = new Restaurant();
+        restaurant.setOwner(user);
+        restaurant.setAddress(restaurantRegistrationDTO.getAddress());
+        restaurant.setRestaurantName(restaurantRegistrationDTO.getRestaurantName());
+        restaurant.setOpeningTimeMonday(restaurantRegistrationDTO.getOpeningTimeMonday());
+        restaurant.setClosingTimeMonday(restaurantRegistrationDTO.getClosingTimeMonday());
+        restaurant.setMondayClosed(restaurantRegistrationDTO.isMondayClosed());
+        restaurant.setOpeningTimeTuesday(restaurantRegistrationDTO.getOpeningTimeTuesday());
+        restaurant.setClosingTimeTuesday(restaurantRegistrationDTO.getClosingTimeTuesday());
+        restaurant.setTuesdayClosed(restaurantRegistrationDTO.isTuesdayClosed());
+        restaurant.setOpeningTimeWednesday(restaurantRegistrationDTO.getOpeningTimeWednesday());
+        restaurant.setClosingTimeWednesday(restaurantRegistrationDTO.getClosingTimeWednesday());
+        restaurant.setWednesdayClosed(restaurantRegistrationDTO.isWednesdayClosed());
+        restaurant.setOpeningTimeThursday(restaurantRegistrationDTO.getOpeningTimeThursday());
+        restaurant.setClosingTimeThursday(restaurantRegistrationDTO.getClosingTimeThursday());
+        restaurant.setThursdayClosed(restaurantRegistrationDTO.isThursdayClosed());
+        restaurant.setOpeningTimeFriday(restaurantRegistrationDTO.getOpeningTimeFriday());
+        restaurant.setClosingTimeFriday(restaurantRegistrationDTO.getClosingTimeFriday());
+        restaurant.setFridayClosed(restaurantRegistrationDTO.isFridayClosed());
+        restaurant.setOpeningTimeSaturday(restaurantRegistrationDTO.getOpeningTimeSaturday());
+        restaurant.setClosingTimeSaturday(restaurantRegistrationDTO.getClosingTimeSaturday());
+        restaurant.setSaturdayClosed(restaurantRegistrationDTO.isSaturdayClosed());
+        restaurant.setOpeningTimeSunday(restaurantRegistrationDTO.getOpeningTimeSunday());
+        restaurant.setClosingTimeSunday(restaurantRegistrationDTO.getClosingTimeSunday());
+        restaurant.setSundayClosed(restaurantRegistrationDTO.isSundayClosed());
+
+        restaurantRepository.save(restaurant);
     }
 
     @Override

@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 
 @NoArgsConstructor
@@ -16,7 +17,6 @@ import java.time.LocalDateTime;
 @Entity(name = "tusers")
 public class User {
     @Id
-    @OneToOne
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Enumerated(EnumType.STRING)
@@ -32,6 +32,9 @@ public class User {
     private String password;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+
+    @OneToMany(mappedBy = "owner")
+    private List<Restaurant> ownedRestaurants;
 
 
     public enum Role {

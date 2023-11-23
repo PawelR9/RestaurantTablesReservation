@@ -35,6 +35,6 @@ public class RestaurantRegistrationDTO {
     private String closingTimeSaturday;
     private boolean saturdayClosed;
     private String openingTimeSunday;
-    private String closingTineSunday;
+    private String closingTimeSunday;
     private boolean sundayClosed;
 }

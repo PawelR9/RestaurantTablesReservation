@@ -16,11 +16,10 @@ public class Restaurant {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "owner_id", nullable = false)
     private User owner;
 
-    private int ownerId;
     private String restaurantName;
     private String address;
     private String openingTimeMonday;
@@ -42,6 +41,6 @@ public class Restaurant {
     private String closingTimeSaturday;
     private boolean saturdayClosed;
     private String openingTimeSunday;
-    private String closingTineSunday;
+    private String closingTimeSunday;
     private boolean sundayClosed;
 }
