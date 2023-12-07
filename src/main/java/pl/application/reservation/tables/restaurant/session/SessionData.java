@@ -1,4 +1,5 @@
 package pl.application.reservation.tables.restaurant.session;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,14 +21,11 @@ public class SessionData {
     }
 
     public boolean isAdmin() {
-        if(this.user == null) {
-            return false;
-        }
-        return this.user.getRole() == User.Role.ADMIN;
+        return this.user != null && this.user.getRole().equals(User.Role.ADMIN);
     }
 
     public String getInfo() {
-        if(this.info == null) {
+        if (this.info == null) {
             return "";
         } else {
             String temp = this.info;

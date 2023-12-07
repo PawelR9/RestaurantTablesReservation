@@ -2,6 +2,7 @@ package pl.application.reservation.tables.restaurant.model.dto;
 
 import lombok.Getter;
 import lombok.Setter;
+import pl.application.reservation.tables.restaurant.model.Restaurant;
 import pl.application.reservation.tables.restaurant.model.User;
 
 @Getter
@@ -16,6 +17,7 @@ public class RestaurantRegistrationDTO {
     private String phoneNumber;
     private String password;
     private User.Role role = User.Role.RESTAURANT_OWNER;
+    private Restaurant.Status status = Restaurant.Status.PENDING;
     private String openingTimeMonday;
     private String closingTimeMonday;
     private boolean mondayClosed;

@@ -12,19 +12,22 @@
     <div th:replace="~{fragments.html :: logout}"></div>
     <main>
         <div th:if="${logged}">
+            <div th:if="${isadmin}" th:text="${isadmin}">isadmin</div>
             <div th:if="${correctLogIn}" th:text="${correctLogIn}">CorrectLogIn</div>
         </div>
+        <a th:if="${admin}" th:href="/admin/restaurants}" class="button">Zarządzaj restauracjami</a>
+
     </main>
-<header>
-    <div id="logo">
-        <img src="logo.png" alt="Logo Aplikacji">
-    </div>
-</header>
+    <header>
+        <div id="logo">
+            <img src="logo.png" alt="Logo Aplikacji">
+        </div>
+    </header>
 
 
-<footer>
-    <p>&copy; 2023 Rezerwacja Stolików w Restauracjach</p>
-</footer>
+    <footer>
+        <p>&copy; 2023 Rezerwacja Stolików w Restauracjach</p>
+    </footer>
 </div>
 </body>
 </html>

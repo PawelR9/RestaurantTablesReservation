@@ -19,6 +19,7 @@ public class Restaurant {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "owner_id", nullable = false)
     private User owner;
+    private Status status;
 
     private String restaurantName;
     private String address;
@@ -43,4 +44,11 @@ public class Restaurant {
     private String openingTimeSunday;
     private String closingTimeSunday;
     private boolean sundayClosed;
+
+    public enum Status{
+        PENDING,
+        APPROVED,
+        REJECTED,
+    }
 }
+

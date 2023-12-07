@@ -77,6 +77,7 @@ public class UserService implements IUserService {
 
         Restaurant restaurant = new Restaurant();
         restaurant.setOwner(user);
+        restaurant.setStatus(restaurantRegistrationDTO.getStatus());
         restaurant.setAddress(restaurantRegistrationDTO.getAddress());
         restaurant.setRestaurantName(restaurantRegistrationDTO.getRestaurantName());
         restaurant.setOpeningTimeMonday(restaurantRegistrationDTO.getOpeningTimeMonday());

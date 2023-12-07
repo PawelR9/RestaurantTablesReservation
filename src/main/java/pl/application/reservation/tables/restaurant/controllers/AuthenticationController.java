@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import pl.application.reservation.tables.restaurant.model.User;
 import pl.application.reservation.tables.restaurant.services.IAuthenticationService;
 import pl.application.reservation.tables.restaurant.session.SessionData;
 
@@ -34,7 +35,10 @@ public class AuthenticationController {
                         RedirectAttributes redirectAttributes) {
 
             this.authenticationService.authenticate(email, password);
+
             if (sessionData.isLogged()) {
+                sessionData.isAdmin();
+                redirectAttributes.addFlashAttribute("isadmin", "Jesteś adminem");
                 redirectAttributes.addFlashAttribute("correctLogIn", "Zostałeś poprawnie zalogowany");
                 return "redirect:/main";
             }
