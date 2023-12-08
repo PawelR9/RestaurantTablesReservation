@@ -17,6 +17,7 @@ public class MainPageController {
     public String showMainPage(Model model) {
         if (sessionData.isLogged()) {
             User user = sessionData.getUser();
+            ModelUtils.addCommonDataToModel(model, this.sessionData);
             model.addAttribute("logged", true);
             model.addAttribute("user", user);
             return "main";

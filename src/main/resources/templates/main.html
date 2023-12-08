@@ -14,9 +14,8 @@
         <div th:if="${logged}">
             <div th:if="${isadmin}" th:text="${isadmin}">isadmin</div>
             <div th:if="${correctLogIn}" th:text="${correctLogIn}">CorrectLogIn</div>
+            <button th:if="${adminrapapara}" href="/admin/restaurants" class="button">Zarządzaj restauracjami</button>
         </div>
-        <a th:if="${admin}" th:href="/admin/restaurants}" class="button">Zarządzaj restauracjami</a>
-
     </main>
     <header>
         <div id="logo">

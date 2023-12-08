@@ -34,14 +34,15 @@ public class AuthenticationController {
                         @RequestParam String password,
                         RedirectAttributes redirectAttributes) {
 
-            this.authenticationService.authenticate(email, password);
+        this.authenticationService.authenticate(email, password);
 
-            if (sessionData.isLogged()) {
-                sessionData.isAdmin();
-                redirectAttributes.addFlashAttribute("isadmin", "Jesteś adminem");
-                redirectAttributes.addFlashAttribute("correctLogIn", "Zostałeś poprawnie zalogowany");
-                return "redirect:/main";
-            }
+        if (sessionData.isAdmin()) {
+            redirectAttributes.addFlashAttribute("isadmin", "Jesteś adminem");
+        }
+        if (sessionData.isLogged()) {
+            redirectAttributes.addFlashAttribute("correctLogIn", "Zostałeś poprawnie zalogowany");
+            return "redirect:/main";
+        }
         redirectAttributes.addFlashAttribute("error", "Niepoprawny login lub hasło");
         return "redirect:/login";
     }
