@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Strona główna</title>
+    <link rel="stylesheet" type="text/css" href="common.css">
+    <link rel="stylesheet" type="text/css" href="fragments.css">
+</head>
+<body>
+<div class="container">
+    <div th:replace="~{fragments.html :: logout}"></div>
+    <main>
+        <!-- Tabela z restauracjami -->
+        <table>
+            <thead>
+            <tr>
+                <th>Nazwa restauracji</th>
+                <th>Status</th>
+                <th>Akcje</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <tr th:each="restaurant : ${restaurants}">
+                <td th:text="${restaurant.restaurantName}"></td>
+                <td th:text="${restaurant.status}"></td>
+                <td>
+                    <form th:action="@{manageRestaurants/{restaurantId}/verify(restaurantId=${restaurant.id})}" method="post">
+                        <label for="status">Choose status:</label>
+                        <select id="status" name="status">
+                            <option th:each="status : ${T(pl.application.reservation.tables.restaurant.model.Restaurant.Status).values()}"
+                                    th:value="${status}" th:text="${status}"></option>
+                        </select>
+                        <button type="submit">Update Status</button>
+                    </form>
+                </td>
+            </tr>
+
+            </tbody>
+        </table>
+    </main>
+    <header>
+        <div id="logo">
+            <img src="logo.png" alt="Logo Aplikacji">
+        </div>
+    </header>
+
+
+    <footer>
+        <p>&copy; 2023 Rezerwacja Stolików w Restauracjach</p>
+    </footer>
+</div>
+</body>
+</html>
