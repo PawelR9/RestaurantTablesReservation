@@ -9,7 +9,7 @@ import pl.application.reservation.tables.restaurant.repository.IRestaurantReposi
 import java.util.List;
 
 @Service
-public class RestaurantService {
+public class RestaurantService implements IRestaurantService {
     @Autowired
     IRestaurantRepository restaurantRepository;
 

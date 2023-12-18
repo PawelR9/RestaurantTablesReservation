@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rezerwacja Stolików w Restauracjach</title>
     <link rel="stylesheet" type="text/css" href="common.css">
+    <link rel="stylesheet" type="text/css" href="fragments.css">
 
 </head>
 <body>
@@ -14,20 +15,40 @@
             <img th:src="@{/logo.png}" alt="Logo Aplikacji">
         </div>
     </header>
+    <div th:replace="~{fragments.html :: logout}"></div>
+    <main>
+        <div th:if="!${isadmin}">
+            <h1>Witaj w naszej aplikacji!</h1>
+            <p>Zarezerwuj stolik i ciesz się pysznym jedzeniem.</p>
 
-<main>
-    <h1>Witaj w naszej aplikacji!</h1>
-    <p>Zarezerwuj stolik i ciesz się pysznym jedzeniem.</p>
+            <ul>
+                <li th:each="restaurant : ${restaurants}">
+                    <span th:text="${restaurant.restaurantName}"></span>
+                    <a th:href="@{/reservation/{restaurantId}(restaurantId=${restaurant.id})}" class="button">Rezerwuj</a>
+                </li>
+            </ul>
 
-    <div id="buttons">
-        <a href="/loginPage" th:href="@{/loginPage}">Zaloguj się</a>
-        <a href="/register" th:href="@{/register}">Zarejestruj się</a>
-    </div>
-</main>
 
-<footer>
-    <p>&copy; 2023 Rezerwacja Stolików w Restauracjach</p>
-</footer>
+        </div>
+
+        <div th:if="${logged}">
+            <div th:if="${isadmin}" th:text="${isadmin}">isadmin</div>
+            <div th:if="${correctLogIn}" th:text="${correctLogIn}">CorrectLogIn</div>
+            <a th:if="${admin}" th:href="@{manageRestaurants}" class="button">Zarządzaj restauracjami</a>
+        </div>
+
+        <div th:if="!${logged}">
+            <div id="buttons">
+                <a href="/loginPage" th:href="@{/loginPage}">Zaloguj się</a>
+                <a href="/register" th:href="@{/register}">Zarejestruj się</a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 Rezerwacja Stolików w Restauracjach</p>
+    </footer>
 </div>
 </body>
 </html>
+

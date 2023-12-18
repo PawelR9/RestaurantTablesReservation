@@ -39,14 +39,14 @@ public class ClientRegistrationController {
     public String registerClient(ClientRegistrationDTO clientRegistrationDTO, RedirectAttributes redirectAttributes) {
         try {
             userService.registerClient(clientRegistrationDTO);
-            redirectAttributes.addFlashAttribute("correctRegistration", "Rejestracja przebieg³a pomyœlnie. Mo¿esz spróbowaæ siê zalogowaæ.");
+            redirectAttributes.addFlashAttribute("correctRegistration", "Rejestracja przebiegÅ‚a pomyÅ›lnie. MoÅ¼esz sprÃ³bowaÄ‡ siÄ™ zalogowaÄ‡.");
             return "redirect:/login";
         } catch (SQLIntegrityConstraintViolationException e) {
             String message = e.getMessage();
             if (message.contains("o podanym adresie email.")) {
-                redirectAttributes.addFlashAttribute("emailError", "Istnieje ju¿ konto o podanym adresie email.");
+                redirectAttributes.addFlashAttribute("emailError", "Istnieje juÅ¼ konto o podanym adresie email.");
             } else if (message.contains("o podanym loginie.")) {
-                redirectAttributes.addFlashAttribute("loginError", "Istnieje ju¿ konto o podanym loginie.");
+                redirectAttributes.addFlashAttribute("loginError", "Istnieje juÅ¼ konto o podanym loginie.");
             }
 
             redirectAttributes.addFlashAttribute("model", clientRegistrationDTO);

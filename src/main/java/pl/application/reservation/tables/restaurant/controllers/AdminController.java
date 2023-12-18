@@ -8,7 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import pl.application.reservation.tables.restaurant.model.Restaurant;
-import pl.application.reservation.tables.restaurant.services.RestaurantService;
+import pl.application.reservation.tables.restaurant.services.IRestaurantService;
 
 import java.util.List;
 
@@ -17,7 +17,7 @@ import java.util.List;
 public class AdminController {
 
     @Autowired
-    private RestaurantService restaurantService;
+    private IRestaurantService restaurantService;
 
     @GetMapping
     public ModelAndView getAllRestaurants(Model model) {

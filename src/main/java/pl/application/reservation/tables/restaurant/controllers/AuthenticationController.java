@@ -5,6 +5,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,7 +25,7 @@ public class AuthenticationController {
 
     @GetMapping("login")
     public String login(Model model) {
-        ModelUtils.addCommonDataToModel(model, this.sessionData);
+        ModelUtils.addCommonDataToModel((ModelMap) model, this.sessionData);
         model.addAttribute("info", this.sessionData.getInfo());
         return "login";
     }
@@ -41,7 +42,7 @@ public class AuthenticationController {
         }
         if (sessionData.isLogged()) {
             redirectAttributes.addFlashAttribute("correctLogIn", "Zostałeś poprawnie zalogowany");
-            return "redirect:/main";
+            return "redirect:/index";
         }
         redirectAttributes.addFlashAttribute("error", "Niepoprawny login lub hasło");
         return "redirect:/login";
