@@ -58,13 +58,6 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
         if (session != null) {
             session.invalidate();
         }
-
-        String address = "pawel458it@gmail.com";
-        String title = "Email test";
-        String mailMessage = "Email test.";
-
-        emailService.sendEmail(address, title, mailMessage);
-
     }
 }
 
