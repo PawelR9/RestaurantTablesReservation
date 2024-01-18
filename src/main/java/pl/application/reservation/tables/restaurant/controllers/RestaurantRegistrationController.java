@@ -46,7 +46,7 @@ public class RestaurantRegistrationController {
             }
 
             redirectAttributes.addFlashAttribute("model", restaurantRegistrationDTO);
-            return "redirect:/clientRegistrationForm";
+            return "redirect:/restaurantRegistrationForm";
         }
     }
 }

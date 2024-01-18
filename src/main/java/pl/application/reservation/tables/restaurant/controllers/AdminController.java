@@ -26,13 +26,14 @@ public class AdminController {
     SessionData sessionData;
 
     @GetMapping
-    public ModelAndView getAllRestaurants(Model model) {
+    public ModelAndView getAllRestaurants(Model model, @RequestParam(name = "statusUpdated", required = false) boolean statusUpdated) {
         User user = sessionData.getUser();
 
         if (user != null && sessionData.isAdmin()) {
             List<Restaurant> restaurants = restaurantService.getAllRestaurants();
             ModelAndView modelAndView = new ModelAndView("manageRestaurants");
             modelAndView.addObject("restaurants", restaurants);
+            modelAndView.addObject("statusUpdated", statusUpdated);
             return modelAndView;
         } else {
             return new ModelAndView("login").addObject("accessDeniedMessage", "Odmowa dostępu. Nie jesteś adminem.");
@@ -40,15 +41,13 @@ public class AdminController {
     }
 
     @PostMapping("/{restaurantId}/verify")
-    public ResponseEntity<String> updateRestaurantStatus(@PathVariable Integer restaurantId,
+    public String updateRestaurantStatus(@PathVariable Integer restaurantId,
                                                          @RequestParam Restaurant.Status status) {
         try {
             restaurantService.updateRestaurantStatus(restaurantId, status);
-            return ResponseEntity.ok("Status updated");
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body("Invalid status");
+            return "redirect:/manageRestaurants?statusUpdated=true";
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error status updating");
+            return "redirect:/manageRestaurants?statusUpdated=false";
         }
     }
 }

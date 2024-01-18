@@ -22,17 +22,23 @@
             </thead>
             <tbody>
 
+            <p th:if="${param.statusUpdated}">Status został zaktualizowany!</p>
+
+
             <tr th:each="restaurant : ${restaurants}">
                 <td th:text="${restaurant.restaurantName}"></td>
                 <td th:text="${restaurant.status}"></td>
+
                 <td>
-                    <form th:action="@{manageRestaurants/{restaurantId}/verify(restaurantId=${restaurant.id})}" method="post">
-                        <label for="status">Choose status:</label>
+                    <form th:action="@{manageRestaurants/{restaurantId}/verify(restaurantId=${restaurant.id})}"
+                          method="post">
+                        <label for="status">Wybierz status:</label>
                         <select id="status" name="status">
+                            <option value="" selected disabled>Wybierz</option>
                             <option th:each="status : ${T(pl.application.reservation.tables.restaurant.model.Restaurant.Status).values()}"
                                     th:value="${status}" th:text="${status}"></option>
                         </select>
-                        <button type="submit">Update Status</button>
+                        <button type="submit">Aktualizuj Status</button>
                     </form>
                 </td>
             </tr>
