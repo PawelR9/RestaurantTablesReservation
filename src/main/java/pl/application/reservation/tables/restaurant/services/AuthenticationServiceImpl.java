@@ -17,8 +17,6 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
 
     @Autowired
     IUserRepository userRepository;
-    @Autowired
-    EmailService emailService;
     @Resource
     SessionData sessionData;
 

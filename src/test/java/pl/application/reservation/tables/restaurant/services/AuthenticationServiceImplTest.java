@@ -28,7 +28,6 @@ class AuthenticationServiceImplTest {
 
     @Test
     void testAuthenticateWithValidCredentials() {
-        // Arrange
         User user = new User();
         user.setId(1);
         user.setLogin("testuser");
@@ -37,10 +36,8 @@ class AuthenticationServiceImplTest {
 
         Mockito.when(userRepository.findByLogin(anyString())).thenReturn(Optional.of(user));
 
-        // Act
         boolean result = authenticationService.authenticate("testuser", "password");
 
-        // Assert
         assertTrue(result);
         assertNull(user.getPassword());
         Mockito.verify(sessionData).setUser(user);
@@ -58,7 +55,6 @@ class AuthenticationServiceImplTest {
 
     @Test
     void testAuthenticatePasswordWithValidCredentials() {
-        // Arrange
         User user = new User();
         user.setId(1);
         user.setPassword("5f4dcc3b5aa765d61d8327deb882cf99");
@@ -69,7 +65,7 @@ class AuthenticationServiceImplTest {
         boolean result = authenticationService.authenticatePassword(1, "password");
 
         assertTrue(result);
-        Mockito.verify(sessionData).setUser(user); // Verify that the sessionData.setUser was called with the correct user
+        Mockito.verify(sessionData).setUser(user);
     }
 
     @Test
