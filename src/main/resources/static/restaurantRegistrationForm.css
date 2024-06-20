@@ -1,5 +1,3 @@
-/* restaurantRegistrationForm.css */
-
 /* Stylizacja formularza rejestracji */
 form {
     margin-top: 20px;
@@ -80,16 +78,10 @@ footer {
     align-items: baseline; /* Wyrównanie wg linii bazowej */
 }
 
-
 .opening-hours input[type="text"] {
     width: 67px;
     margin-right: 10px;
     margin-left: 20px;
-}
-
-/* Pola podświetlają się na szaro po zaznaczeniu checkboxa */
-input[type="text"][disabled] {
-    background-color: #eee;
 }
 
 .closed-label {
@@ -99,4 +91,13 @@ input[type="text"][disabled] {
 .opening-hours-row {
     display: flex;
     align-items: center;
-    }
+}
+
+input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #007bff;
+    border-radius: 5px;
+    box-sizing: border-box;
+}

@@ -22,11 +22,17 @@ label {
 
 input[type="text"],
 input[type="email"],
-input[type="tel"],
-input[type="password"]{
+input[type="tel"]{
     width: 100%;
     padding: 10px;
     border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #007bff;
     border-radius: 5px;
 }
 
@@ -41,12 +47,14 @@ input[type="password"]{
     color: #fff;
 }
 
-button[type="submit"],
-button[type="button"]
-{
+
+
+button[type="submit"] {
     display: inline-block;
     margin-top: 10px;
     padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
     text-decoration: none;
     border: none;
     border-radius: 5px;

@@ -1,6 +1,5 @@
 form {
-    margin-top: 20px;
-    margin-bottom: 20px;
+    margin: 20px 0;
     padding: 20px;
     background-color: #fff;
     border-radius: 10px;
@@ -39,6 +38,7 @@ button[type="submit"] {
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
 button[type="submit"]:hover {

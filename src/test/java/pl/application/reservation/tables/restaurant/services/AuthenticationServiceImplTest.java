@@ -1,9 +1,11 @@
 package pl.application.reservation.tables.restaurant.services;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 import pl.application.reservation.tables.restaurant.model.User;
 import pl.application.reservation.tables.restaurant.repository.IUserRepository;
 import pl.application.reservation.tables.restaurant.session.SessionData;
@@ -13,9 +15,8 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyString;
 
-
+@ExtendWith(MockitoExtension.class)
 class AuthenticationServiceImplTest {
-
 
     @Mock
     private IUserRepository userRepository;
@@ -50,7 +51,7 @@ class AuthenticationServiceImplTest {
         boolean result = authenticationService.authenticate("nonexistentuser", "wrongpassword");
 
         assertFalse(result);
-        Mockito.verify(sessionData, Mockito.never()).setUser(Mockito.any()); // Ensure that sessionData.setUser was not called
+        Mockito.verify(sessionData, Mockito.never()).setUser(Mockito.any());
     }
 
     @Test
@@ -60,7 +61,6 @@ class AuthenticationServiceImplTest {
         user.setPassword("5f4dcc3b5aa765d61d8327deb882cf99");
 
         Mockito.when(userRepository.findById(1)).thenReturn(Optional.of(user));
-
 
         boolean result = authenticationService.authenticatePassword(1, "password");
 
@@ -75,8 +75,6 @@ class AuthenticationServiceImplTest {
         boolean result = authenticationService.authenticatePassword(1, "wrongpassword");
 
         assertFalse(result);
-        Mockito.verify(sessionData, Mockito.never()).setUser(Mockito.any()); // Ensure that sessionData.setUser was not called
+        Mockito.verify(sessionData, Mockito.never()).setUser(Mockito.any());
     }
 }
-
-
